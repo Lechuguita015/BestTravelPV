@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_onboardings"
+    app:startDestination="@id/onBoarding1Fragment">
+
+    <fragment
+        android:id="@+id/onBoarding1Fragment"
+        android:name="com.example.besttravel.ui.onboarding.OnBoarding1Fragment"
+        android:label="fragment_on_boarding1"
+        tools:layout="@layout/fragment_on_boarding1" >
+        <action
+            android:id="@+id/action_onBoarding1Fragment_to_onBoarding2Fragment"
+            app:destination="@id/onBoarding2Fragment" />
+        <action
+            android:id="@+id/action_onBoarding1Fragment_to_login2"
+            app:destination="@id/login2" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoarding2Fragment"
+        android:name="com.example.besttravel.ui.onboarding.OnBoarding2Fragment"
+        android:label="fragment_on_boarding2"
+        tools:layout="@layout/fragment_on_boarding2" >
+        <action
+            android:id="@+id/action_onBoarding2Fragment_to_onBoarding3Fragment"
+            app:destination="@id/onBoarding3Fragment" />
+        <action
+            android:id="@+id/action_onBoarding2Fragment_to_onBoarding1Fragment"
+            app:destination="@id/onBoarding1Fragment" />
+        <action
+            android:id="@+id/action_onBoarding2Fragment_to_login2"
+            app:destination="@id/login2" />
+    </fragment>
+    <fragment
+        android:id="@+id/onBoarding3Fragment"
+        android:name="com.example.besttravel.ui.onboarding.OnBoarding3Fragment"
+        android:label="fragment_on_boarding3"
+        tools:layout="@layout/fragment_on_boarding3" >
+        <action
+            android:id="@+id/action_onBoarding3Fragment_to_onBoarding2Fragment"
+            app:destination="@id/onBoarding2Fragment" />
+        <action
+            android:id="@+id/action_onBoarding3Fragment_to_login2"
+            app:destination="@id/login2" />
+    </fragment>
+    <activity
+        android:id="@+id/login2"
+        android:name="com.example.besttravel.ui.Login"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+</navigation>

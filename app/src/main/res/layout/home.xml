@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:scrollbars="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linear_account"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/purple_200"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/user"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hugo Montano"
+            android:textSize="24dp"
+            android:textColor="@color/black"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_account"
+        android:background="@color/teal_200">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/black"
+                android:text="Encuentra el lugar apropiado para ti!"
+                android:textSize="16dp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_account"
+        android:background="@color/teal_700">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+          <ImageButton
+              android:id="@+id/iv_restaurant"
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              android:src="@drawable/restaurant"
+              android:background="@drawable/round_button"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintEnd_toStartOf="@id/iv_beaches"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:layout_marginStart="20dp"/>
+          <ImageButton
+              android:id="@+id/iv_beaches"
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              android:src="@drawable/food"
+              android:background="@drawable/round_button"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintStart_toEndOf="@id/iv_restaurant"
+              app:layout_constraintEnd_toStartOf="@id/iv_hotel"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:layout_marginStart="20dp"/>
+          <ImageButton
+              android:id="@+id/iv_hotel"
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              android:src="@drawable/food"
+              android:background="@drawable/round_button"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintStart_toEndOf="@id/iv_beaches"
+              app:layout_constraintEnd_toStartOf="@id/iv_rents_cars"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:layout_marginStart="20dp"/>
+          <ImageButton
+              android:id="@+id/iv_rents_cars"
+              android:layout_width="56dp"
+              android:layout_height="56dp"
+              android:src="@drawable/food"
+              android:background="@drawable/round_button"
+              app:layout_constraintTop_toTopOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toEndOf="@id/iv_hotel"
+              app:layout_constraintBottom_toBottomOf="parent"
+              android:layout_marginStart="20dp"
+              android:layout_marginEnd="20dp"
+              />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+            <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="216dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linear_account"
+            android:background="@color/prueba"
+            android:orientation="horizontal">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/tv_restaurant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Best Restaurants"
+                            android:textColor="@color/black"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            android:layout_marginStart="16dp"
+                            android:textSize="16dp"
+                            android:textStyle="bold"/>
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tv_restaurant"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+            </ScrollView>
+
+    </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_account"
+        android:background="@color/prueba2">
+
+
+    </LinearLayout>
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/linear_account"
+        android:background="@color/prueba3">
+
+    </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
