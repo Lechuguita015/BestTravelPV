@@ -1,5 +1,6 @@
 package com.example.besttravel.ui.Home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,52 +8,38 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import com.example.besttravel.R
-import com.example.besttravel.ui.servicesbt.BeachesFragment
-import com.example.besttravel.ui.servicesbt.CarsFragment
-import com.example.besttravel.ui.servicesbt.HotelsFragment
-import com.example.besttravel.ui.servicesbt.RestaurantsFragment
+import com.example.besttravel.ui.servicesbt.ServicesbtActivity
 
-class HomeFragment : Fragment() {
+open class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val button1 = view.findViewById<ImageButton>(R.id.iv_restaurant)
-        val button2 = view.findViewById<ImageButton>(R.id.iv_beaches)
-        val button3 = view.findViewById<ImageButton>(R.id.iv_hotel)
-        val button4 = view.findViewById<ImageButton>(R.id.iv_rents_cars)
+        val btnRestaurant = view.findViewById<ImageButton>(R.id.iv_restaurant)
+        val btnBeaches = view.findViewById<ImageButton>(R.id.iv_beaches)
+        val btnHotel = view.findViewById<ImageButton>(R.id.iv_hotel)
+        val btnCars = view.findViewById<ImageButton>(R.id.iv_rents_cars)
 
-        button1.setOnClickListener {
-            val fragment = RestaurantsFragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.fragment_container, fragment)
-            transaction?.addToBackStack(null)
-            transaction?.commit()
+        btnRestaurant.setOnClickListener {
+            val intent = Intent(activity, ServicesbtActivity::class.java)
+            intent.putExtra("FRAGMENT_ID",R.id.fragment_restaurant)
+            startActivity(intent)
         }
-
-        button2.setOnClickListener {
-            val fragment = BeachesFragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.fragment_container, fragment)
-            transaction?.addToBackStack(null)
-            transaction?.commit()
+        btnBeaches.setOnClickListener {
+            val intent = Intent(activity, ServicesbtActivity::class.java)
+            intent.putExtra("FRAGMENT_ID",R.id.fragment_beaches)
+            startActivity(intent)
         }
-
-        button3.setOnClickListener {
-            val fragment = HotelsFragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.fragment_container, fragment)
-            transaction?.addToBackStack(null)
-            transaction?.commit()
+        btnHotel.setOnClickListener {
+            val intent = Intent(activity, ServicesbtActivity::class.java)
+            intent.putExtra("FRAGMENT_ID",R.id.fragment_hotel)
+            startActivity(intent)
         }
-
-        button4.setOnClickListener {
-            val fragment = CarsFragment()
-            val transaction = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.fragment_container, fragment)
-            transaction?.addToBackStack(null)
-            transaction?.commit()
+        btnCars.setOnClickListener {
+            val intent = Intent(activity, ServicesbtActivity::class.java)
+            intent.putExtra("FRAGMENT_ID",R.id.fragment_cars)
+            startActivity(intent)
         }
 
         return view

@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.servicesbt.HotelsFragment">
+    tools:context=".ui.servicesbt.HotelsFragment"
+    android:id="@+id/fragment_hotel">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="hoteles" />
+        android:text="hoteles"/>
 
 </FrameLayout>

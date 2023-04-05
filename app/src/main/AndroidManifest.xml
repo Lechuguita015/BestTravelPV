@@ -12,6 +12,9 @@
         android:theme="@style/Theme.BestTravel"
         tools:targetApi="31">
         <activity
+            android:name=".ui.servicesbt.ServicesbtActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.Home.MenuHome"
             android:exported="false" />
         <activity
