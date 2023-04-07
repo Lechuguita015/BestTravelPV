@@ -2,4 +2,6 @@
     <string name="app_name">BestTravel</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_skip">Skip</string>
+    <string name="tv_onboard_1">You will have the best experience in Puerto Vallarta where you can enjoy your best vacations for you and your family.</string>
 </resources>

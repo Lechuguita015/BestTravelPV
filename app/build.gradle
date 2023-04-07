@@ -23,6 +23,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -39,6 +42,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     //Uso de retrofit para consumo de apis-service
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //Conversion de imagenes SVG
+    implementation 'com.caverock:androidsvg:1.4'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
