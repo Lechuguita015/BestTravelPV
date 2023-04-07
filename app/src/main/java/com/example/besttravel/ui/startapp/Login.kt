@@ -1,4 +1,4 @@
-package com.example.besttravel.ui
+package com.example.besttravel.ui.startapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

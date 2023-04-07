@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/btn_skip"
-            android:textColor="@color/colorApp"
+            android:textColor="@color/colorbtnOnboard"
+            android:backgroundTint="@color/white"
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -40,10 +41,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="16dp"
-            android:text="Experience"
+            android:text="Good experience"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:textSize="40dp"/>
+            android:textSize="32dp"/>
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -53,6 +54,18 @@
             android:layout_marginTop="16dp"
             android:text="@string/tv_onboard_1"
             android:gravity="center"/>
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorbtnOnboard"
+            android:backgroundTint="@color/white"
+            android:layout_marginBottom="8dp"
+            android:text="Next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

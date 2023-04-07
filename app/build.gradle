@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -44,6 +45,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     //Conversion de imagenes SVG
     implementation 'com.caverock:androidsvg:1.4'
+    //firebase auth
+    implementation platform('com.google.firebase:firebase-bom:31.3.0')
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation 'com.google.firebase:firebase-auth-ktx'
+    //Email verification
+    implementation 'com.sun.mail:javax.mail:1.6.2'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

@@ -4,4 +4,18 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="btn_skip">Skip</string>
     <string name="tv_onboard_1">You will have the best experience in Puerto Vallarta where you can enjoy your best vacations for you and your family.</string>
+    <string name="tv_onboard_2">You will find what you could never have on your trip, just one click and you will have the best experience.</string>
+    <string name="tv_onboard_3">No matter where you are, you can save your favorite places and have them at hand for your next visit.</string>
+    <string name="dont_have_account">Don\'t have an account? Join us</string>
+    <string name="cancel">Cancel</string>
+    <string name="text_intro_join_us">Join us to start loocking for the best places</string>
+    <string name="user_name">User name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="join_us">Join us</string>
+    <string name="have_account">Have an account? Log in</string>
+    <string name="tv_welcome_login">You are ready to live the best experience with us, now go and log in to get started.</string>
+    <string name="tv_error">There was an error registering your account, let\'s try again to fix this error.</string>
+    <string name="message">the email and/or password are incorrect</string>
+    <string name="accept">Retry</string>
 </resources>
