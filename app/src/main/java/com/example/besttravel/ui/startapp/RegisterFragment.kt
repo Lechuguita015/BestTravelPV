@@ -1,39 +1,16 @@
 package com.example.besttravel.ui.startapp
 
-import android.app.blob.BlobStoreManager
-import android.content.ContentValues.TAG
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.os.Message
-import android.util.Log
-import android.view.KeyEvent
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.fragment.findNavController
 import com.example.besttravel.R
-import com.example.besttravel.ui.Home.MenuHome
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import org.w3c.dom.Text
-import java.net.PasswordAuthentication
-import java.util.*
-import javax.mail.Authenticator
-import javax.mail.MessagingException
-import javax.mail.Transport
-import javax.mail.internet.InternetAddress
-import javax.mail.internet.MimeMessage
 
 
 open class RegisterFragment : Fragment(R.layout.fragment_register) {

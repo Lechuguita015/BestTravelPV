@@ -1,12 +1,12 @@
-package com.example.besttravel.ui.Home
+package com.example.besttravel.ui.home
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.besttravel.R
+import com.example.besttravel.utils.AppPrefs
+import com.example.besttravel.utils.Constants
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -18,7 +18,18 @@ class MenuHome : AppCompatActivity(),BottomNavigationView.OnNavigationItemSelect
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener(this)
 
+        loadFavoriteData()
         loadFragment(HomeFragment())
+    }
+
+    private fun loadFavoriteData() {
+        val getList = AppPrefs.getList(this)
+        Constants.mFavoriteList.addAll(getList)
+
+        for (i in 0 until getList.size)
+        {
+            Constants.mStringList.add(getList[i].address)
+        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

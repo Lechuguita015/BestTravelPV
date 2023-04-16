@@ -3,26 +3,26 @@ package com.example.besttravel.ui.startapp
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.besttravel.R
-import com.example.besttravel.ui.Home.MenuHome
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.example.besttravel.ui.home.MenuHome
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
+
     private lateinit var auth: FirebaseAuth
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         auth = Firebase.auth
+
         val tvDontAccount = view.findViewById<TextView>(R.id.dont_have_account)
         val btnLogIn = view.findViewById<Button>(R.id.bt_login)
 
