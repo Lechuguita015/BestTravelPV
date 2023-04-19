@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -45,10 +46,10 @@ open class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val btnRestaurant = view.findViewById<ImageButton>(R.id.iv_restaurant)
-        val btnBeaches = view.findViewById<ImageButton>(R.id.iv_beaches)
-        val btnHotel = view.findViewById<ImageButton>(R.id.iv_hotel)
-        val btnCars = view.findViewById<ImageButton>(R.id.iv_rents_cars)
+        val btnRestaurant = view.findViewById<CardView>(R.id.iv_restaurant)
+        val btnBeaches = view.findViewById<CardView>(R.id.iv_beaches)
+        val btnHotel = view.findViewById<CardView>(R.id.iv_hotel)
+        val btnCars = view.findViewById<CardView>(R.id.iv_rents_cars)
         //initialize all RecyclerView
         rvHotels = view.findViewById<RecyclerView>(R.id.rv_hotels)
         rvRestaurants = view.findViewById<RecyclerView>(R.id.rv_restaurant)
