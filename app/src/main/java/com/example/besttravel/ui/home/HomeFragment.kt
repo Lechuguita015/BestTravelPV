@@ -2,12 +2,15 @@ package com.example.besttravel.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.cardview.widget.CardView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +31,8 @@ import com.example.besttravel.ui.interfaces.ItemClickListener
 import com.example.besttravel.ui.servicesbt.ServicesbtActivity
 import com.example.besttravel.utils.AppPrefs
 import com.example.besttravel.utils.Constants
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
 
 
 open class HomeFragment : Fragment() {
@@ -94,7 +99,10 @@ open class HomeFragment : Fragment() {
         {
             getBestBeaches()
         }
-        //binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            showDataReciclerView()
+        }, 3000)
         return view
     }
 
@@ -274,5 +282,10 @@ open class HomeFragment : Fragment() {
         rvRestaurants.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rvRestaurants.adapter = restaurantsResponseAdapter
+    }
+    private fun showDataReciclerView() {
+
+       // binding.viewLoading.isVisible = false
+        //binding.rv_beaches.isVisible = true
     }
 }

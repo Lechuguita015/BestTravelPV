@@ -34,7 +34,7 @@ class HotelsFragment : Fragment() {
         getBestHotels()
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
-        }, 5000)
+        }, 3000)
         return binding.root
     }
 

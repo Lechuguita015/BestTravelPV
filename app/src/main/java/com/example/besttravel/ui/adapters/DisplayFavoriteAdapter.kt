@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.besttravel.databinding.ItemViewBinding
 import com.example.besttravel.models.beaches.BeachesResponse
 import com.example.besttravel.models.hotels.HotelsResponse
 import com.example.besttravel.databinding.ItemviewResponseBinding
@@ -21,7 +22,7 @@ class DisplayFavoriteAdapter(val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val binding = ItemviewResponseBinding.inflate(LayoutInflater.from(context),parent,false)
+        val binding = ItemViewBinding.inflate(LayoutInflater.from(context),parent,false)
         return ViewHolder(binding)
     }
 
@@ -35,12 +36,12 @@ class DisplayFavoriteAdapter(val context: Context,
     }
 
 
-    class ViewHolder(private val binding: ItemviewResponseBinding): RecyclerView.ViewHolder(binding.root)
+    class ViewHolder(private val binding: ItemViewBinding): RecyclerView.ViewHolder(binding.root)
     {
         fun bindItem(context: Context, model: FavoriteModel, mItemClickInterface: ItemClickListener)
         {
             binding.tvName.text =  model.itemName
-            binding.tvDesc.text = model.itemDesc
+            //binding.tvDesc.text = model.itemDesc
             Glide.with(context)
                 .load(model.images[0].urlImage)
                 .into(binding.iv)
