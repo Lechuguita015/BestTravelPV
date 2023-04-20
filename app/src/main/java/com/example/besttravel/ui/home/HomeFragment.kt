@@ -15,6 +15,7 @@ import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.ParsedRequestListener
 import com.example.besttravel.R
+import com.example.besttravel.databinding.FragmentHomeBinding
 import com.example.besttravel.models.FavoriteModel
 import com.example.besttravel.models.beaches.BeachesResponse
 import com.example.besttravel.models.hotels.HotelsResponse
@@ -40,6 +41,7 @@ open class HomeFragment : Fragment() {
     lateinit var restaurantsResponseAdapter: DisplayRestaurantsResponseAdapter
     lateinit var hotelsResponseAdapter: DisplayHotelsResponseAdapter
     lateinit var beachesResponseAdapter: DisplayBeachesResponseAdapter
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -92,7 +94,7 @@ open class HomeFragment : Fragment() {
         {
             getBestBeaches()
         }
-
+        //binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
         return view
     }
 
@@ -104,7 +106,7 @@ open class HomeFragment : Fragment() {
                 HotelsResponse::class.java,
                 object : ParsedRequestListener<ArrayList<HotelsResponse>> {
                     override fun onResponse(response: ArrayList<HotelsResponse>) {
-                        Log.e("TAG", "onResponse: Best Restaurants: $response")
+                        Log.e("TAG", "onResponse: Best Hotels: $response")
 
 
                         mHotelsList.addAll(response)
@@ -130,7 +132,7 @@ open class HomeFragment : Fragment() {
 
 
                         mRestaurantsList.addAll(response)
-                       restaurantsResponseAdapter.notifyDataSetChanged()
+                        this@HomeFragment.restaurantsResponseAdapter.notifyDataSetChanged()
                     }
 
                     override fun onError(anError: ANError?) {
@@ -148,11 +150,11 @@ open class HomeFragment : Fragment() {
                 BeachesResponse::class.java,
                 object : ParsedRequestListener<ArrayList<BeachesResponse>> {
                     override fun onResponse(response: ArrayList<BeachesResponse>) {
-                        Log.e("TAG", "onResponse: Best Restaurants: $response")
+                        Log.e("TAG", "onResponse: Best Beaches: $response")
 
 
                         mBeachesList.addAll(response)
-                       beachesResponseAdapter.notifyDataSetChanged()
+                        this@HomeFragment.beachesResponseAdapter.notifyDataSetChanged()
                     }
 
                     override fun onError(anError: ANError?) {

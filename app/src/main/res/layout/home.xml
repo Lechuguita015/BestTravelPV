@@ -91,8 +91,8 @@
                   app:lottie_rawRes="@raw/restaurantes"
                   app:lottie_autoPlay="true"
                   app:lottie_loop="true"
-                  android:layout_marginTop="3.5dp"
-                  android:layout_marginStart="3.5dp"/>
+                  android:layout_marginTop="4dp"
+                  android:layout_marginStart="4dp"/>
 
           </androidx.cardview.widget.CardView>
           <androidx.cardview.widget.CardView
@@ -113,8 +113,8 @@
                   app:lottie_rawRes="@raw/playa"
                   app:lottie_autoPlay="true"
                   app:lottie_loop="true"
-                  android:layout_marginTop="3.5dp"
-                  android:layout_marginStart="3.5dp"/>
+                  android:layout_marginTop="4dp"
+                  android:layout_marginStart="4dp"/>
 
           </androidx.cardview.widget.CardView>
           <androidx.cardview.widget.CardView
@@ -135,8 +135,8 @@
                   app:lottie_rawRes="@raw/hotel"
                   app:lottie_autoPlay="true"
                   app:lottie_loop="true"
-                  android:layout_marginTop="3.5dp"
-                  android:layout_marginStart="3.5dp"/>
+                  android:layout_marginTop="4dp"
+                  android:layout_marginStart="4dp"/>
 
           </androidx.cardview.widget.CardView>
           <androidx.cardview.widget.CardView
@@ -158,8 +158,8 @@
                   app:lottie_rawRes="@raw/carros"
                   app:lottie_autoPlay="true"
                   app:lottie_loop="true"
-                  android:layout_marginTop="3.5dp"
-                  android:layout_marginStart="3.5dp"/>
+                  android:layout_marginTop="4dp"
+                  android:layout_marginStart="4dp"/>
 
           </androidx.cardview.widget.CardView>
 
@@ -182,12 +182,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:background="@color/white_trans">
+                    >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/white_trans">
+                        >
 
                         <TextView
                             android:id="@+id/tv_hotels"
@@ -208,6 +208,7 @@
                             android:layout_height="0dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_hotels"
+                            android:paddingStart="16dp"
                             android:layout_marginBottom="16dp"
                             android:layout_marginTop="16dp"/>
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -253,6 +254,7 @@
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:paddingStart="16dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_restaurant"
                             android:layout_marginBottom="16dp"
@@ -281,12 +283,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:background="@color/white_trans">
+                    >
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@color/white_trans">
+                        >
 
                         <TextView
                             android:id="@+id/tv_beaches"
@@ -304,6 +306,7 @@
                             android:orientation="horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
+                            android:paddingStart="16dp"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/tv_beaches"
                             android:layout_marginBottom="16dp"

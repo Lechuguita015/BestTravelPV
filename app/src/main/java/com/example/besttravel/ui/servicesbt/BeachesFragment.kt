@@ -2,11 +2,14 @@ package com.example.besttravel.ui.servicesbt
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.AndroidNetworking
@@ -30,8 +33,12 @@ class BeachesFragment : Fragment() {
         binding = FragmentBeachesBinding.inflate(inflater, container, false)
 
         getBestBeaches()
+        Handler(Looper.getMainLooper()).postDelayed({
+            showDataReciclerView()
+        }, 5000)
         return binding.root
     }
+
     private fun getBestBeaches() {
         AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/beach/all")
             .setPriority(com.androidnetworking.common.Priority.HIGH)
@@ -40,7 +47,7 @@ class BeachesFragment : Fragment() {
                 BeachesResponse::class.java,
                 object : ParsedRequestListener<ArrayList<BeachesResponse>> {
                     override fun onResponse(response: ArrayList<BeachesResponse>) {
-                        Log.e("TAG", "onResponse: Best Restaurants: $response")
+                        Log.e("TAG", "onResponse: Best Playas: $response")
 
 
                         mBeachesList.addAll(response)
@@ -75,6 +82,11 @@ class BeachesFragment : Fragment() {
             })
         binding.rvBeaches.layoutManager = LinearLayoutManager(requireContext())
         binding.rvBeaches.adapter = adapter
+    }
+
+    private fun showDataReciclerView() {
+        binding.viewLoading.isVisible = false
+        binding.rvBeaches.isVisible = true
     }
 
 }

@@ -42,7 +42,9 @@ def lottieVersion = "3.4.0"
 dependencies {
     //Lottie animations
     implementation "com.airbnb.android:lottie:$lottieVersion"
-
+    //Shimmer pantalla de carga
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    //Conversor de imagenes svg
     implementation 'com.caverock:androidsvg:1.4'
     //Uso de material desing para los componentes
     implementation 'com.google.android.material:material:1.8.0'

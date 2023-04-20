@@ -2,11 +2,14 @@ package com.example.besttravel.ui.servicesbt
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
@@ -29,6 +32,9 @@ class RestaurantsFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentRestaurantsBinding.inflate(inflater, container, false)
         getBestRestaurants()
+        Handler(Looper.getMainLooper()).postDelayed({
+            showDataReciclerView()
+        }, 5000)
         return binding.root
     }
 
@@ -72,5 +78,8 @@ class RestaurantsFragment : Fragment() {
        binding.rv.layoutManager = LinearLayoutManager(requireContext())
        binding.rv.adapter = adapter
     }
-
+    private fun showDataReciclerView() {
+        binding.viewLoading.isVisible = false
+        binding.rv.isVisible = true
+    }
 }
