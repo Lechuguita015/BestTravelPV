@@ -37,27 +37,41 @@ class FavoriteFragment : Fragment() {
 
                 override fun onFavClick(position: Int) {
                     val address = Constants.mFavoriteList[position].address!!
+                    val isChecked = !Constants.mFavoriteList[position].isFavorite
+
                     if (!Constants.mStringList.contains(address)) {
                         val model = FavoriteModel(
-                            Constants.mFavoriteList[position].itemName!!, Constants.mFavoriteList[position].itemDesc!!,
-                            Constants.mFavoriteList[position].images, Constants.mFavoriteList[position].phone!!,
+                            Constants.mFavoriteList[position].itemName!!,
+                            Constants.mFavoriteList[position].itemDesc!!,
+                            Constants.mFavoriteList[position].images,
+                            Constants.mFavoriteList[position].phone!!,
                             address
                         )
+                        model.isFavorite = isChecked
                         Constants.mFavoriteList.add(model)
                         Constants.mStringList.add(address)
                     } else {
                         val index = Constants.mStringList.indexOf(address)
-                        Constants.mFavoriteList.removeAt(index)
+                        Constants.mFavoriteList[index].isFavorite = isChecked
+                        if (!isChecked) {
+                            Constants.mFavoriteList.removeAt(index)
+                            Constants.mStringList.removeAt(index)
+                        }
                     }
-                    AppPrefs.saveList(requireContext(),Constants.mFavoriteList)
-                    adapter.notifyItemRemoved(position)
+
+                    AppPrefs.saveList(requireContext(), Constants.mFavoriteList)
+                    adapter.notifyItemChanged(position)
                 }
 
             })
-        binding.rv.layoutManager =
-            LinearLayoutManager(requireContext())
-        binding.rv.adapter = adapter
+        for (favorite in Constants.mFavoriteList) {
+            if (Constants.mStringList.contains(favorite.address)) {
+                favorite.isFavorite = true
+                binding.rv.layoutManager =
+                    LinearLayoutManager(requireContext())
+                binding.rv.adapter = adapter
+            }
+
+        }
     }
-
-
 }
