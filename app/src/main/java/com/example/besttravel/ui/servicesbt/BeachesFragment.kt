@@ -20,7 +20,13 @@ import com.example.besttravel.models.beaches.BeachesResponse
 import com.example.besttravel.databinding.FragmentBeachesBinding
 import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayBeachesResponseAdapter
+import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class BeachesFragment : Fragment() {
     private lateinit var binding: FragmentBeachesBinding
@@ -31,7 +37,7 @@ class BeachesFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentBeachesBinding.inflate(inflater, container, false)
-
+        initBeachesAdapter()
         getBestBeaches()
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
@@ -40,25 +46,29 @@ class BeachesFragment : Fragment() {
     }
 
     private fun getBestBeaches() {
-        AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/beach/all")
-            .setPriority(com.androidnetworking.common.Priority.HIGH)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .getAsObjectList(
-                BeachesResponse::class.java,
-                object : ParsedRequestListener<ArrayList<BeachesResponse>> {
-                    override fun onResponse(response: ArrayList<BeachesResponse>) {
-                        Log.e("TAG", "onResponse: Best Playas: $response")
 
+        val beachService = retrofit.create(ApiService::class.java)
 
-                        mBeachesList.addAll(response)
-                        initBeachesAdapter()
-                    }
+        beachService.getAllBeaches().enqueue(object : Callback<List<BeachesResponse>> {
+            override fun onResponse(call: Call<List<BeachesResponse>>, response: Response<List<BeachesResponse>>) {
+                if (response.isSuccessful) {
+                    val beaches = response.body()
+                    Log.e("TAG", "onResponse: Best Playas: $beaches")
+                    mBeachesList.addAll(beaches!!)
 
-                    override fun onError(anError: ANError?) {
-                        Log.e("TAG", "onError: ${anError!!.message}")
+                } else {
+                    Log.e("TAG", "onError: ${response.message()}")
+                }
+            }
 
-                    }
-                })
+            override fun onFailure(call: Call<List<BeachesResponse>>, t: Throwable) {
+                Log.e("TAG", "onFailure: ${t.message}")
+            }
+        })
     }
 
     private fun initBeachesAdapter() {

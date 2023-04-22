@@ -19,7 +19,13 @@ import com.example.besttravel.models.restaurants.RestaurantsResponse
 import com.example.besttravel.databinding.FragmentRestaurantsBinding
 import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayRestaurantsResponseAdapter
+import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class RestaurantsFragment : Fragment() {
     private lateinit var binding: FragmentRestaurantsBinding
@@ -31,6 +37,7 @@ class RestaurantsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRestaurantsBinding.inflate(inflater, container, false)
+        initRestaurantsAdapter()
         getBestRestaurants()
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
@@ -39,25 +46,28 @@ class RestaurantsFragment : Fragment() {
     }
 
     private fun getBestRestaurants() {
-        AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/restaurant/all")
-            .setPriority(com.androidnetworking.common.Priority.HIGH)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .getAsObjectList(
-                RestaurantsResponse::class.java,
-                object : ParsedRequestListener<ArrayList<RestaurantsResponse>> {
-                    override fun onResponse(response: ArrayList<RestaurantsResponse>) {
-                        Log.e("TAG", "onResponse: Best Restaurants: $response")
 
+        val restaurantService = retrofit.create(ApiService::class.java)
 
-                        mRestaurantsList.addAll(response)
-                        initRestaurantsAdapter()
-                    }
+        restaurantService.getAllRestaurants().enqueue(object : Callback<List<RestaurantsResponse>> {
+            override fun onResponse(call: Call<List<RestaurantsResponse>>, response: Response<List<RestaurantsResponse>>) {
+                if (response.isSuccessful) {
+                    val restaurants = response.body()
+                    Log.e("TAG", "onResponse: Best Restaurants: $restaurants")
+                    mRestaurantsList.addAll(restaurants!!)
+                } else {
+                    Log.e("TAG", "onError: ${response.message()}")
+                }
+            }
 
-                    override fun onError(anError: ANError?) {
-                        Log.e("TAG", "onError: ${anError!!.message}")
-
-                    }
-                })
+            override fun onFailure(call: Call<List<RestaurantsResponse>>, t: Throwable) {
+                Log.e("TAG", "onFailure: ${t.message}")
+            }
+        })
     }
     private fun initRestaurantsAdapter()
     {

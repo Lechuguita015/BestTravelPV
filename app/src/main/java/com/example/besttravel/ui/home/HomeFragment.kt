@@ -46,9 +46,9 @@ open class HomeFragment : Fragment() {
     private var mHotelsList: ArrayList<HotelsResponse> = ArrayList()
     private var mRestaurantsList: ArrayList<RestaurantsResponse> = ArrayList()
     private var mBeachesList: ArrayList<BeachesResponse> = ArrayList()
-    private lateinit var rvHotels: RecyclerView
-    private lateinit var rvRestaurants: RecyclerView
-    private lateinit var rvBeaches: RecyclerView
+    //private lateinit var rvHotels: RecyclerView
+    //private lateinit var rvRestaurants: RecyclerView
+    //private lateinit var rvBeaches: RecyclerView
     lateinit var restaurantsResponseAdapter: DisplayRestaurantsResponseAdapter
     lateinit var hotelsResponseAdapter: DisplayHotelsResponseAdapter
     lateinit var beachesResponseAdapter: DisplayBeachesResponseAdapter

@@ -18,12 +18,19 @@ import com.example.besttravel.models.hotels.HotelsResponse
 import com.example.besttravel.databinding.FragmentHotelsBinding
 import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayHotelsResponseAdapter
+import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class HotelsFragment : Fragment() {
     private lateinit var binding: FragmentHotelsBinding
 
     private var mHotelsList: ArrayList<HotelsResponse> = ArrayList()
+    //lateinit var hotelsResponseAdapter: DisplayHotelsResponseAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +38,7 @@ class HotelsFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentHotelsBinding.inflate(inflater,container,false)
+        initHotelAdapter()
         getBestHotels()
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
@@ -39,25 +47,29 @@ class HotelsFragment : Fragment() {
     }
 
     private fun getBestHotels() {
-        AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/hotel/all")
-            .setPriority(com.androidnetworking.common.Priority.HIGH)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .getAsObjectList(
-                HotelsResponse::class.java,
-                object : ParsedRequestListener<ArrayList<HotelsResponse>> {
-                    override fun onResponse(response: ArrayList<HotelsResponse>) {
-                        Log.e("TAG", "onResponse: Best Restaurants: $response")
 
+        val hotelService = retrofit.create(ApiService::class.java)
 
-                        mHotelsList.addAll(response)
-                        initHotelAdapter()
-                    }
+        hotelService.getAllHotels().enqueue(object : Callback<List<HotelsResponse>> {
+            override fun onResponse(call: Call<List<HotelsResponse>>, response: Response<List<HotelsResponse>>) {
+                if (response.isSuccessful) {
+                    val hotels = response.body()
+                    Log.e("TAG", "onResponse: Best Hotels: $hotels")
+                    mHotelsList.addAll(hotels!!)
+                    //hotelsResponseAdapter.notifyDataSetChanged()
+                } else {
+                    Log.e("TAG", "onError: ${response.message()}")
+                }
+            }
 
-                    override fun onError(anError: ANError?) {
-                        Log.e("TAG", "onError: ${anError!!.message}")
-
-                    }
-                })
+            override fun onFailure(call: Call<List<HotelsResponse>>, t: Throwable) {
+                Log.e("TAG", "onFailure: ${t.message}")
+            }
+        })
     }
     private fun initHotelAdapter()
     {
