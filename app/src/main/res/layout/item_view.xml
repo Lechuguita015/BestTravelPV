@@ -53,17 +53,15 @@
 
             </androidx.cardview.widget.CardView>
 
-            <ImageView
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/iv_fav"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:src="@drawable/favorite"
+                android:button="@drawable/states_cb_favorite"
+                android:buttonTint="@color/white"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 />
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

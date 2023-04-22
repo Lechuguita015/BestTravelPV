@@ -9,5 +9,6 @@ data class FavoriteModel(
     val itemDesc: String,
     val images: ArrayList<Images>,
     val phone: String,
-    val address: String
+    val address: String,
+    val isFavorite: Boolean = false
 ) : java.io.Serializable
