@@ -52,32 +52,34 @@ open class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
-        val btnRestaurant = view.findViewById<CardView>(R.id.iv_restaurant)
-        val btnBeaches = view.findViewById<CardView>(R.id.iv_beaches)
-        val btnHotel = view.findViewById<CardView>(R.id.iv_hotel)
-        val btnCars = view.findViewById<CardView>(R.id.iv_rents_cars)
-        //initialize all RecyclerView
-        rvHotels = view.findViewById<RecyclerView>(R.id.rv_hotels)
-        rvRestaurants = view.findViewById<RecyclerView>(R.id.rv_restaurant)
-        rvBeaches = view.findViewById<RecyclerView>(R.id.rv_beaches)
+        binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
-        btnRestaurant.setOnClickListener {
+       // val btnRestaurant = view.findViewById<CardView>(R.id.iv_restaurant)
+        //val btnBeaches = view.findViewById<CardView>(R.id.iv_beaches)
+        //val btnHotel = view.findViewById<CardView>(R.id.iv_hotel)
+        //val btnCars = view.findViewById<CardView>(R.id.iv_rents_cars)
+        //initialize all RecyclerView
+        //rvHotels = view.findViewById<RecyclerView>(R.id.rv_hotels)
+        //rvRestaurants = view.findViewById<RecyclerView>(R.id.rv_restaurant)
+        //rvBeaches = view.findViewById<RecyclerView>(R.id.rv_beaches)
+
+
+        binding.ivRestaurant.setOnClickListener {
             val intent = Intent(activity, ServicesbtActivity::class.java)
             intent.putExtra("FRAGMENT_ID", R.id.fragment_restaurant)
             startActivity(intent)
         }
-        btnBeaches.setOnClickListener {
+        binding.ivBeaches.setOnClickListener {
             val intent = Intent(activity, ServicesbtActivity::class.java)
             intent.putExtra("FRAGMENT_ID", R.id.fragment_beaches)
             startActivity(intent)
         }
-        btnHotel.setOnClickListener {
+        binding.ivHotel.setOnClickListener {
             val intent = Intent(activity, ServicesbtActivity::class.java)
             intent.putExtra("FRAGMENT_ID", R.id.fragment_hotel)
             startActivity(intent)
         }
-        btnCars.setOnClickListener {
+        binding.ivRentsCars.setOnClickListener {
             val intent = Intent(activity, ServicesbtActivity::class.java)
             intent.putExtra("FRAGMENT_ID", R.id.fragment_cars)
             startActivity(intent)
@@ -101,10 +103,46 @@ open class HomeFragment : Fragment() {
         }
 
         Handler(Looper.getMainLooper()).postDelayed({
-            showDataReciclerView()
-        }, 3000)
-        return view
+            showDataReciclerViewBeaches()
+            showDataReciclerViewRestaurants()
+            showDataReciclerViewHotels()
+
+        }, 3500)
+        binding.tvChargerHotels.setOnClickListener {
+            if (mHotelsList.isEmpty())
+            {
+                getBestHotels()
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                showDataReciclerViewHotels()
+
+            }, 3500)
+        }
+        binding.tvChargerRestaurants.setOnClickListener {
+            Handler(Looper.getMainLooper()).postDelayed({
+                showDataReciclerViewRestaurants()
+
+            }, 3500)
+            if (mRestaurantsList.isEmpty())
+            {
+                getBestRestaurants()
+            }
+        }
+        binding.tvChargerBeaches.setOnClickListener {
+            binding.tvChargerRestaurants.isVisible = false
+            if (mBeachesList.isEmpty())
+            {
+                getBestBeaches()
+            }
+            Handler(Looper.getMainLooper()).postDelayed({
+                showDataReciclerViewBeaches()
+
+            }, 3500)
+        }
+        return binding.root
     }
+
+
 
     private fun getBestHotels() {
         AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/hotel/all")
@@ -122,7 +160,9 @@ open class HomeFragment : Fragment() {
                     }
 
                     override fun onError(anError: ANError?) {
-                        Log.e("TAG", "onError: ${anError!!.message}")
+                        binding.tvChargerHotels.isVisible = true
+                        binding.rvHotels.isVisible = false
+                        Log.e("TAG", "onErrorHotels: ${anError!!.message}")
 
                     }
                 })
@@ -144,7 +184,9 @@ open class HomeFragment : Fragment() {
                     }
 
                     override fun onError(anError: ANError?) {
-                        Log.e("TAG", "onError: ${anError!!.message}")
+                        binding.tvChargerRestaurants.isVisible = true
+                        binding.rvRestaurant.isVisible = false
+                        Log.e("TAG", "onErrorRestaurants: ${anError!!.message}")
 
                     }
                 })
@@ -166,7 +208,9 @@ open class HomeFragment : Fragment() {
                     }
 
                     override fun onError(anError: ANError?) {
-                        Log.e("TAG", "onError: ${anError!!.message}")
+                        binding.rvBeaches.isVisible = false
+                        binding.tvChargerBeaches.isVisible = true
+                        Log.e("TAG", "onErrorBeaches: ${anError!!.message}")
 
                     }
                 })
@@ -204,9 +248,9 @@ open class HomeFragment : Fragment() {
                 }
 
             })
-        rvHotels.layoutManager =
+        binding.rvHotels.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rvHotels.adapter = hotelsResponseAdapter
+        binding.rvHotels.adapter = hotelsResponseAdapter
     }
 
     private fun initBeachesAdapter() {
@@ -241,9 +285,9 @@ open class HomeFragment : Fragment() {
                 }
 
             })
-        rvBeaches.layoutManager =
+        binding.rvBeaches.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rvBeaches.adapter = beachesResponseAdapter
+        binding.rvBeaches.adapter = beachesResponseAdapter
     }
 
     private fun initRestaurantsAdapter() {
@@ -279,13 +323,21 @@ open class HomeFragment : Fragment() {
                 }
 
             })
-        rvRestaurants.layoutManager =
+        binding.rvRestaurant.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        rvRestaurants.adapter = restaurantsResponseAdapter
+        binding.rvRestaurant.adapter = restaurantsResponseAdapter
     }
-    private fun showDataReciclerView() {
+    private fun showDataReciclerViewBeaches() {
+        binding.viewLoadingBeaches.isVisible = false
+        binding.rvBeaches.isVisible = true
+    }
+    private fun showDataReciclerViewHotels() {
+        binding.viewLoadingHotels.isVisible = false
+        binding.rvHotels.isVisible = true
+    }
 
-       // binding.viewLoading.isVisible = false
-        //binding.rv_beaches.isVisible = true
+    private fun showDataReciclerViewRestaurants() {
+        binding.viewLoadingRest.isVisible = false
+        binding.rvRestaurant.isVisible = true
     }
 }

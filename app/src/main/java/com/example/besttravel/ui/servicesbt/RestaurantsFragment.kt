@@ -34,7 +34,7 @@ class RestaurantsFragment : Fragment() {
         getBestRestaurants()
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
-        }, 5000)
+        }, 3500)
         return binding.root
     }
 

@@ -35,7 +35,7 @@ class BeachesFragment : Fragment() {
         getBestBeaches()
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
-        }, 5000)
+        }, 3500)
         return binding.root
     }
 

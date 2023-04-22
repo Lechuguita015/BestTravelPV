@@ -25,7 +25,7 @@ class SplashScreen : AppCompatActivity() {
           }
             // Cierra la actividad actual
             finish()
-        }, 5000)
+        }, 3500)
     }
 
 
