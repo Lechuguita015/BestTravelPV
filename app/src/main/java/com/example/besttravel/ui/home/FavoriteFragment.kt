@@ -1,5 +1,6 @@
 package com.example.besttravel.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,8 +9,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.besttravel.databinding.FragmentFavoriteBinding
 import com.example.besttravel.models.FavoriteModel
+import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayBeachesResponseAdapter
 import com.example.besttravel.ui.adapters.DisplayFavoriteAdapter
+import com.example.besttravel.ui.adapters.DisplayHotelsResponseAdapter
+import com.example.besttravel.ui.adapters.DisplayRestaurantsResponseAdapter
 import com.example.besttravel.ui.interfaces.ItemClickListener
 import com.example.besttravel.utils.AppPrefs
 import com.example.besttravel.utils.Constants
@@ -18,6 +22,7 @@ import com.example.besttravel.utils.Constants
 class FavoriteFragment : Fragment() {
     private lateinit var binding: FragmentFavoriteBinding
     private lateinit var adapter: DisplayFavoriteAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,18 +38,19 @@ class FavoriteFragment : Fragment() {
             Constants.mFavoriteList,
             object : ItemClickListener {
                 override fun onClick(position: Int) {
+
                 }
 
                 override fun onFavClick(position: Int) {
-                    val address = Constants.mFavoriteList[position].address!!
+                    val address = Constants.mFavoriteList[position].address
                     val isChecked = !Constants.mFavoriteList[position].isFavorite
 
                     if (!Constants.mStringList.contains(address)) {
                         val model = FavoriteModel(
-                            Constants.mFavoriteList[position].itemName!!,
-                            Constants.mFavoriteList[position].itemDesc!!,
+                            Constants.mFavoriteList[position].itemName,
+                            Constants.mFavoriteList[position].itemDesc,
                             Constants.mFavoriteList[position].images,
-                            Constants.mFavoriteList[position].phone!!,
+                            Constants.mFavoriteList[position].phone,
                             address
                         )
                         model.isFavorite = isChecked
@@ -74,4 +80,5 @@ class FavoriteFragment : Fragment() {
 
         }
     }
+
 }

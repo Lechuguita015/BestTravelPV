@@ -46,6 +46,7 @@ class DisplayHotelsResponseAdapter(val context: Context,
             binding.ivFav.setOnClickListener {
                 mItemClickInterface.onFavClick(adapterPosition)
             }
+            binding.ivFav.isChecked = model.isFavorite
             binding.root.setOnClickListener {
                 mItemClickInterface.onClick(adapterPosition)
             }

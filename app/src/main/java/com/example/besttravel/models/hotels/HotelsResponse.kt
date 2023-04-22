@@ -12,6 +12,7 @@ data class HotelsResponse (
     @SerializedName("address"     ) var address     : String?           = null,
     @SerializedName("phone"       ) var phone       : String?           = null,
     @SerializedName("images"      ) var images      : ArrayList<Images> = arrayListOf(),
-    @SerializedName("comments"    ) var comments    : String?           = null
+    @SerializedName("comments"    ) var comments    : String?           = null,
+    var isFavorite: Boolean = false
 
 ):java.io.Serializable
