@@ -52,6 +52,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     //Conversion de imagenes SVG
     implementation 'com.caverock:androidsvg:1.4'
+    //Gson convert
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
     //firebase auth
     implementation platform('com.google.firebase:firebase-bom:31.3.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'

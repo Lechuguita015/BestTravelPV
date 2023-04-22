@@ -27,12 +27,18 @@ import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayBeachesResponseAdapter
 import com.example.besttravel.ui.adapters.DisplayHotelsResponseAdapter
 import com.example.besttravel.ui.adapters.DisplayRestaurantsResponseAdapter
+import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
 import com.example.besttravel.ui.servicesbt.ServicesbtActivity
 import com.example.besttravel.utils.AppPrefs
 import com.example.besttravel.utils.Constants
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 open class HomeFragment : Fragment() {
@@ -142,78 +148,93 @@ open class HomeFragment : Fragment() {
         return binding.root
     }
 
-
-
     private fun getBestHotels() {
-        AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/hotel/all")
-            .setPriority(com.androidnetworking.common.Priority.HIGH)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .getAsObjectList(
-                HotelsResponse::class.java,
-                object : ParsedRequestListener<ArrayList<HotelsResponse>> {
-                    override fun onResponse(response: ArrayList<HotelsResponse>) {
-                        Log.e("TAG", "onResponse: Best Hotels: $response")
 
+        val hotelService = retrofit.create(ApiService::class.java)
 
-                        mHotelsList.addAll(response)
-                        this@HomeFragment.hotelsResponseAdapter.notifyDataSetChanged()
-                    }
+        hotelService.getAllHotels().enqueue(object : Callback<List<HotelsResponse>> {
+            override fun onResponse(call: Call<List<HotelsResponse>>, response: Response<List<HotelsResponse>>) {
+                if (response.isSuccessful) {
+                    val hotels = response.body()
+                    Log.e("TAG", "onResponse: Best Hotels: $hotels")
+                    mHotelsList.addAll(hotels!!)
+                    hotelsResponseAdapter.notifyDataSetChanged()
+                } else {
+                    binding.tvChargerHotels.isVisible = true
+                    binding.rvHotels.isVisible = false
+                    Log.e("TAG", "onErrorHotels: ${response.message()}")
+                }
+            }
 
-                    override fun onError(anError: ANError?) {
-                        binding.tvChargerHotels.isVisible = true
-                        binding.rvHotels.isVisible = false
-                        Log.e("TAG", "onErrorHotels: ${anError!!.message}")
-
-                    }
-                })
+            override fun onFailure(call: Call<List<HotelsResponse>>, t: Throwable) {
+                binding.tvChargerHotels.isVisible = true
+                binding.rvHotels.isVisible = false
+                Log.e("TAG", "onFailureHotels: ${t.message}")
+            }
+        })
     }
 
     private fun getBestRestaurants() {
-        AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/restaurant/all")
-            .setPriority(com.androidnetworking.common.Priority.HIGH)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .getAsObjectList(
-                RestaurantsResponse::class.java,
-                object : ParsedRequestListener<ArrayList<RestaurantsResponse>> {
-                    override fun onResponse(response: ArrayList<RestaurantsResponse>) {
-                        Log.e("TAG", "onResponse: Best Restaurants: $response")
 
+        val restaurantService = retrofit.create(ApiService::class.java)
 
-                        mRestaurantsList.addAll(response)
-                        this@HomeFragment.restaurantsResponseAdapter.notifyDataSetChanged()
-                    }
+        restaurantService.getAllRestaurants().enqueue(object : Callback<List<RestaurantsResponse>> {
+            override fun onResponse(call: Call<List<RestaurantsResponse>>, response: Response<List<RestaurantsResponse>>) {
+                if (response.isSuccessful) {
+                    val restaurants = response.body()
+                    Log.e("TAG", "onResponse: Best Restaurants: $restaurants")
+                    mRestaurantsList.addAll(restaurants!!)
+                    restaurantsResponseAdapter.notifyDataSetChanged()
+                } else {
+                    binding.tvChargerRestaurants.isVisible = true
+                    binding.rvRestaurant.isVisible = false
+                    Log.e("TAG", "onErrorRestaurants: ${response.message()}")
+                }
+            }
 
-                    override fun onError(anError: ANError?) {
-                        binding.tvChargerRestaurants.isVisible = true
-                        binding.rvRestaurant.isVisible = false
-                        Log.e("TAG", "onErrorRestaurants: ${anError!!.message}")
-
-                    }
-                })
+            override fun onFailure(call: Call<List<RestaurantsResponse>>, t: Throwable) {
+                binding.tvChargerRestaurants.isVisible = true
+                binding.rvRestaurant.isVisible = false
+                Log.e("TAG", "onFailureRestaurants: ${t.message}")
+            }
+        })
     }
-
     private fun getBestBeaches() {
-        AndroidNetworking.get("https://api-best-travel.azurewebsites.net/api/service/beach/all")
-            .setPriority(com.androidnetworking.common.Priority.HIGH)
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .getAsObjectList(
-                BeachesResponse::class.java,
-                object : ParsedRequestListener<ArrayList<BeachesResponse>> {
-                    override fun onResponse(response: ArrayList<BeachesResponse>) {
-                        Log.e("TAG", "onResponse: Best Beaches: $response")
 
+        val beachService = retrofit.create(ApiService::class.java)
 
-                        mBeachesList.addAll(response)
-                        this@HomeFragment.beachesResponseAdapter.notifyDataSetChanged()
-                    }
+        beachService.getAllBeaches().enqueue(object : Callback<List<BeachesResponse>> {
+            override fun onResponse(call: Call<List<BeachesResponse>>, response: Response<List<BeachesResponse>>) {
+                if (response.isSuccessful) {
+                    val beaches = response.body()
+                    Log.e("TAG", "onResponse: Best Beaches: $beaches")
+                    mBeachesList.addAll(beaches!!)
+                    beachesResponseAdapter.notifyDataSetChanged()
+                } else {
+                    binding.rvBeaches.isVisible = false
+                    binding.tvChargerBeaches.isVisible = true
+                    Log.e("TAG", "onErrorBeaches: ${response.message()}")
+                }
+            }
 
-                    override fun onError(anError: ANError?) {
-                        binding.rvBeaches.isVisible = false
-                        binding.tvChargerBeaches.isVisible = true
-                        Log.e("TAG", "onErrorBeaches: ${anError!!.message}")
-
-                    }
-                })
+            override fun onFailure(call: Call<List<BeachesResponse>>, t: Throwable) {
+                binding.rvBeaches.isVisible = false
+                binding.tvChargerBeaches.isVisible = true
+                Log.e("TAG", "onFailureBeaches: ${t.message}")
+            }
+        })
     }
 
     private fun initHotelAdapter() {
