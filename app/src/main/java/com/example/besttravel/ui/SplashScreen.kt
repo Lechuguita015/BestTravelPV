@@ -15,20 +15,16 @@ class SplashScreen : AppCompatActivity() {
         setContentView(R.layout.activity_splash_screen)
         Handler().postDelayed({
             // Inicia la siguiente actividad después del temporizador
-          if (FirebaseAuth.getInstance().currentUser != null)
-          {
-              val intent = Intent(this, MenuHome::class.java)
-              startActivity(intent)
-          }else
-          {
-              startActivity(Intent(this, Onboardings::class.java))
-          }
+            if (FirebaseAuth.getInstance().currentUser != null) {
+                val intent = Intent(this, MenuHome::class.java)
+                startActivity(intent)
+            } else {
+                startActivity(Intent(this, Onboardings::class.java))
+            }
             // Cierra la actividad actual
             finish()
         }, 3500)
     }
-
-
     //api-best-travel.azurewebsites.net/api/service/beach/all
     //api-best-travel.azurewebsites.net/api/service/hotel/all
     //api-best-travel.azurewebsites.net/api/service/restaurant/all

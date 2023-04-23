@@ -18,4 +18,5 @@
     <string name="tv_error">There was an error registering your account, let\'s try again to fix this error.</string>
     <string name="message">the email and/or password are incorrect</string>
     <string name="accept">Retry</string>
+    <string name="error404">Sorry there was an error creating your user, let\'s try one more time, if the problem persists we will fix it soon.</string>
 </resources>

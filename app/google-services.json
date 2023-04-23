@@ -1,34 +1,33 @@
 {
   "project_info": {
-    "project_number": "765779606910",
-    "firebase_url": "https://best-travel-pv-2023-default-rtdb.firebaseio.com",
-    "project_id": "best-travel-pv-2023",
-    "storage_bucket": "best-travel-pv-2023.appspot.com"
+    "project_number": "464133789713",
+    "project_id": "best-travel-2002",
+    "storage_bucket": "best-travel-2002.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:765779606910:android:fd06d13812c214f95cc72f",
+        "mobilesdk_app_id": "1:464133789713:android:548cf9305568227cbf79b0",
         "android_client_info": {
           "package_name": "com.example.besttravel"
         }
       },
       "oauth_client": [
         {
-          "client_id": "765779606910-saeke0s7t4s3pdoss969t3rh3kr4vfoq.apps.googleusercontent.com",
+          "client_id": "464133789713-er5u8ld1d8dq9mitj1jelrg3r72eqq5m.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD3mJp-RNRWTQQO5VXsEYQbkJ-xh_5joYI"
+          "current_key": "AIzaSyBu97kDlbAwYb1od2ofJXlD60eh-52HiAM"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "765779606910-qr46ene6i3t9jk7u3iutifmrnfvt1l9o.apps.googleusercontent.com",
+              "client_id": "464133789713-er5u8ld1d8dq9mitj1jelrg3r72eqq5m.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,59 +1,77 @@
 package com.example.besttravel.ui.startapp
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.besttravel.R
+import com.example.besttravel.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
 
 open class RegisterFragment : Fragment(R.layout.fragment_register) {
     private lateinit var auth: FirebaseAuth
+    private lateinit var binding: FragmentRegisterBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding =  FragmentRegisterBinding.inflate(inflater,container,false)
+
+        return binding.root
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         auth = Firebase.auth
 
-        val tvCancel = view.findViewById<TextView>(R.id.cancel)
-        val tvHaveAccount = view.findViewById<TextView>(R.id.have_account)
-        val etUserName = view.findViewById<EditText>(R.id.et_username)
-        val btnJoinUS = view.findViewById<Button>(R.id.bt_join_us)
-        val etSendEmail = view.findViewById<EditText>(R.id.et_email_joinus1)
-        val etSendPass = view.findViewById<EditText>(R.id.et_password_joinus1)
+        binding.btJoinUs.setOnClickListener {
 
-        btnJoinUS.setOnClickListener {
-            val etEmail = view.findViewById<EditText>(R.id.et_email_joinus1)
-            val etPass = view.findViewById<EditText>(R.id.et_password_joinus1)
-            createAccount(etEmail.text.toString(),etPass.text.toString())
+            createAccount(binding.etEmailJoinus1.text.toString(),binding.etPasswordJoinus1.text.toString())
         }
 
-        tvCancel.setOnClickListener {
+        binding.cancel.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
-        tvHaveAccount.setOnClickListener {
+        binding.haveAccount.setOnClickListener {
             findNavController().navigate(R.id.action_registerFragment_to_loginFragment)
         }
+
 
     }
 
     private fun createAccount(email: String, password: String) {
         // [START create_user_with_email]
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener() { task ->
-                if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    findNavController().navigate(R.id.action_registerFragment_to_successfulFragment)
-                    sendEmailVerification()
-                } else {
-                    // If sign in fails, display a message to the user.
-                    findNavController().navigate(R.id.action_registerFragment_to_errorFragment)
+        if (binding.etEmailJoinus1.text.toString().isEmpty() ||
+            binding.etPasswordJoinus1.text.toString().isEmpty()){
+            Toast.makeText(activity, "The email and/or password are empty", Toast.LENGTH_SHORT).show()
+        }else{
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener() { task ->
+                    if (task.isSuccessful) {
+                        // Sign in success, update UI with the signed-in user's information
+                        findNavController().navigate(R.id.action_registerFragment_to_successfulFragment)
+                        sendEmailVerification()
+                    } else {
+                        if (task.exception is FirebaseAuthUserCollisionException) {
+                            Toast.makeText(activity, "Esta cuenta ya está registrada. Por favor, intenta de nuevo.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            findNavController().navigate(R.id.action_registerFragment_to_errorFragment)
+                        }
+                    }
                 }
-            }
+        }
+
         // [END create_user_with_email]
     }
     private fun sendEmailVerification() {

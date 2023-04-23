@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.example.besttravel.R
 import com.example.besttravel.ui.onboarding.Onboardings
 
@@ -20,6 +22,10 @@ class SuccessfulFragment : Fragment(R.layout.fragment_successful) {
             startActivity(intent)
             // Cierra la actividad actual
             requireActivity().finish()
-        }, 2000)
+        }, 60000)
+        val exit = view.findViewById<TextView>(R.id.exit)
+        exit.setOnClickListener {
+            findNavController().navigate(R.id.action_successfulFragment_to_loginFragment)
+        }
     }
 }
