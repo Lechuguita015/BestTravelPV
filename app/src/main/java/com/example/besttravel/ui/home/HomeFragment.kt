@@ -35,6 +35,9 @@ import com.example.besttravel.utils.AppPrefs
 import com.example.besttravel.utils.Constants
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -114,80 +117,71 @@ open class HomeFragment : Fragment() {
     }
 
     private fun getBestHotels() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 
-        val hotelService = retrofit.create(ApiService::class.java)
-
-        hotelService.getAllHotels().enqueue(object : Callback<List<HotelsResponse>> {
-            override fun onResponse(call: Call<List<HotelsResponse>>, response: Response<List<HotelsResponse>>) {
-                if (response.isSuccessful) {
-                    val hotels = response.body()
-                    Log.e("TAG", "onResponse: Best Hotels: $hotels")
-                    mHotelsList.addAll(hotels!!)
-                    hotelsResponseAdapter.notifyDataSetChanged()
-                } else {
-                    Log.e("TAG", "onErrorHotels: ${response.message()}")
+        CoroutineScope(Dispatchers.IO).launch {
+            val hotelService = getRetrofit().create(ApiService::class.java)
+            hotelService.getAllHotels().enqueue(object : Callback<List<HotelsResponse>> {
+                override fun onResponse(call: Call<List<HotelsResponse>>, response: Response<List<HotelsResponse>>) {
+                    if (response.isSuccessful) {
+                        val hotels = response.body()
+                        Log.e("TAG", "onResponse: Best Hotels: $hotels")
+                        mHotelsList.addAll(hotels!!)
+                        hotelsResponseAdapter.notifyDataSetChanged()
+                    } else {
+                        Log.e("TAG", "onErrorHotels: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<HotelsResponse>>, t: Throwable) {
-                Log.e("TAG", "onFailureHotels: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<List<HotelsResponse>>, t: Throwable) {
+                    Log.e("TAG", "onFailureHotels: ${t.message}")
+                }
+            })
+        }
     }
 
     private fun getBestRestaurants() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        CoroutineScope(Dispatchers.IO).launch {
+            val restaurantService = getRetrofit().create(ApiService::class.java)
 
-        val restaurantService = retrofit.create(ApiService::class.java)
-
-        restaurantService.getAllRestaurants().enqueue(object : Callback<List<RestaurantsResponse>> {
-            override fun onResponse(call: Call<List<RestaurantsResponse>>, response: Response<List<RestaurantsResponse>>) {
-                if (response.isSuccessful) {
-                    val restaurants = response.body()
-                    Log.e("TAG", "onResponse: Best Restaurants: $restaurants")
-                    mRestaurantsList.addAll(restaurants!!)
-                    restaurantsResponseAdapter.notifyDataSetChanged()
-                } else {
-                    Log.e("TAG", "onErrorRestaurants: ${response.message()}")
+            restaurantService.getAllRestaurants().enqueue(object : Callback<List<RestaurantsResponse>> {
+                override fun onResponse(call: Call<List<RestaurantsResponse>>, response: Response<List<RestaurantsResponse>>) {
+                    if (response.isSuccessful) {
+                        val restaurants = response.body()
+                        Log.e("TAG", "onResponse: Best Restaurants: $restaurants")
+                        mRestaurantsList.addAll(restaurants!!)
+                        restaurantsResponseAdapter.notifyDataSetChanged()
+                    } else {
+                        Log.e("TAG", "onErrorRestaurants: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<RestaurantsResponse>>, t: Throwable) {
-                Log.e("TAG", "onFailureRestaurants: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<List<RestaurantsResponse>>, t: Throwable) {
+                    Log.e("TAG", "onFailureRestaurants: ${t.message}")
+                }
+            })
+        }
     }
     private fun getBestBeaches() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        CoroutineScope(Dispatchers.IO).launch {
+            val beachService = getRetrofit().create(ApiService::class.java)
 
-        val beachService = retrofit.create(ApiService::class.java)
-
-        beachService.getAllBeaches().enqueue(object : Callback<List<BeachesResponse>> {
-            override fun onResponse(call: Call<List<BeachesResponse>>, response: Response<List<BeachesResponse>>) {
-                if (response.isSuccessful) {
-                    val beaches = response.body()
-                    Log.e("TAG", "onResponse: Best Beaches: $beaches")
-                    mBeachesList.addAll(beaches!!)
-                    beachesResponseAdapter.notifyDataSetChanged()
-                } else {
-                    Log.e("TAG", "onErrorBeaches: ${response.message()}")
+            beachService.getAllBeaches().enqueue(object : Callback<List<BeachesResponse>> {
+                override fun onResponse(call: Call<List<BeachesResponse>>, response: Response<List<BeachesResponse>>) {
+                    if (response.isSuccessful) {
+                        val beaches = response.body()
+                        Log.e("TAG", "onResponse: Best Beaches: $beaches")
+                        mBeachesList.addAll(beaches!!)
+                        beachesResponseAdapter.notifyDataSetChanged()
+                    } else {
+                        Log.e("TAG", "onErrorBeaches: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<BeachesResponse>>, t: Throwable) {
-                Log.e("TAG", "onFailureBeaches: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<List<BeachesResponse>>, t: Throwable) {
+                    Log.e("TAG", "onFailureBeaches: ${t.message}")
+                }
+            })
+        }
     }
 
     private fun initHotelAdapter() {
@@ -313,5 +307,11 @@ open class HomeFragment : Fragment() {
     private fun showDataReciclerViewRestaurants() {
         binding.viewLoadingRest.isVisible = false
         binding.rvRestaurant.isVisible = true
+    }
+    private fun getRetrofit():Retrofit{
+        return Retrofit.Builder()
+            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 }

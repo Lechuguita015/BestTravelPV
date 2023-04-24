@@ -21,6 +21,9 @@ import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayRestaurantsResponseAdapter
 import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,28 +49,30 @@ class RestaurantsFragment : Fragment() {
     }
 
     private fun getBestRestaurants() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        CoroutineScope(Dispatchers.IO).launch {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
 
-        val restaurantService = retrofit.create(ApiService::class.java)
+            val restaurantService = retrofit.create(ApiService::class.java)
 
-        restaurantService.getAllRestaurants().enqueue(object : Callback<List<RestaurantsResponse>> {
-            override fun onResponse(call: Call<List<RestaurantsResponse>>, response: Response<List<RestaurantsResponse>>) {
-                if (response.isSuccessful) {
-                    val restaurants = response.body()
-                    Log.e("TAG", "onResponse: Best Restaurants: $restaurants")
-                    mRestaurantsList.addAll(restaurants!!)
-                } else {
-                    Log.e("TAG", "onError: ${response.message()}")
+            restaurantService.getAllRestaurants().enqueue(object : Callback<List<RestaurantsResponse>> {
+                override fun onResponse(call: Call<List<RestaurantsResponse>>, response: Response<List<RestaurantsResponse>>) {
+                    if (response.isSuccessful) {
+                        val restaurants = response.body()
+                        Log.e("TAG", "onResponse: Best Restaurants: $restaurants")
+                        mRestaurantsList.addAll(restaurants!!)
+                    } else {
+                        Log.e("TAG", "onError: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<RestaurantsResponse>>, t: Throwable) {
-                Log.e("TAG", "onFailure: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<List<RestaurantsResponse>>, t: Throwable) {
+                    Log.e("TAG", "onFailure: ${t.message}")
+                }
+            })
+        }
     }
     private fun initRestaurantsAdapter()
     {

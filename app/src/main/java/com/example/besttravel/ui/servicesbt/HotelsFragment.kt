@@ -20,6 +20,9 @@ import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayHotelsResponseAdapter
 import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,29 +50,31 @@ class HotelsFragment : Fragment() {
     }
 
     private fun getBestHotels() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        CoroutineScope(Dispatchers.IO).launch {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
 
-        val hotelService = retrofit.create(ApiService::class.java)
+            val hotelService = retrofit.create(ApiService::class.java)
 
-        hotelService.getAllHotels().enqueue(object : Callback<List<HotelsResponse>> {
-            override fun onResponse(call: Call<List<HotelsResponse>>, response: Response<List<HotelsResponse>>) {
-                if (response.isSuccessful) {
-                    val hotels = response.body()
-                    Log.e("TAG", "onResponse: Best Hotels: $hotels")
-                    mHotelsList.addAll(hotels!!)
-                    //hotelsResponseAdapter.notifyDataSetChanged()
-                } else {
-                    Log.e("TAG", "onError: ${response.message()}")
+            hotelService.getAllHotels().enqueue(object : Callback<List<HotelsResponse>> {
+                override fun onResponse(call: Call<List<HotelsResponse>>, response: Response<List<HotelsResponse>>) {
+                    if (response.isSuccessful) {
+                        val hotels = response.body()
+                        Log.e("TAG", "onResponse: Best Hotels: $hotels")
+                        mHotelsList.addAll(hotels!!)
+                        //hotelsResponseAdapter.notifyDataSetChanged()
+                    } else {
+                        Log.e("TAG", "onError: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<HotelsResponse>>, t: Throwable) {
-                Log.e("TAG", "onFailure: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<List<HotelsResponse>>, t: Throwable) {
+                    Log.e("TAG", "onFailure: ${t.message}")
+                }
+            })
+        }
     }
     private fun initHotelAdapter()
     {

@@ -22,6 +22,9 @@ import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayBeachesResponseAdapter
 import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -46,29 +49,31 @@ class BeachesFragment : Fragment() {
     }
 
     private fun getBestBeaches() {
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api-best-travel.azurewebsites.net/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        CoroutineScope(Dispatchers.IO).launch {
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://api-best-travel.azurewebsites.net/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
 
-        val beachService = retrofit.create(ApiService::class.java)
+            val beachService = retrofit.create(ApiService::class.java)
 
-        beachService.getAllBeaches().enqueue(object : Callback<List<BeachesResponse>> {
-            override fun onResponse(call: Call<List<BeachesResponse>>, response: Response<List<BeachesResponse>>) {
-                if (response.isSuccessful) {
-                    val beaches = response.body()
-                    Log.e("TAG", "onResponse: Best Playas: $beaches")
-                    mBeachesList.addAll(beaches!!)
+            beachService.getAllBeaches().enqueue(object : Callback<List<BeachesResponse>> {
+                override fun onResponse(call: Call<List<BeachesResponse>>, response: Response<List<BeachesResponse>>) {
+                    if (response.isSuccessful) {
+                        val beaches = response.body()
+                        Log.e("TAG", "onResponse: Best Playas: $beaches")
+                        mBeachesList.addAll(beaches!!)
 
-                } else {
-                    Log.e("TAG", "onError: ${response.message()}")
+                    } else {
+                        Log.e("TAG", "onError: ${response.message()}")
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<BeachesResponse>>, t: Throwable) {
-                Log.e("TAG", "onFailure: ${t.message}")
-            }
-        })
+                override fun onFailure(call: Call<List<BeachesResponse>>, t: Throwable) {
+                    Log.e("TAG", "onFailure: ${t.message}")
+                }
+            })
+        }
     }
 
     private fun initBeachesAdapter() {

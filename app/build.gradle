@@ -50,6 +50,8 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
     //Uso de retrofit para consumo de apis-service
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    //Corrutinas
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
     //Conversion de imagenes SVG
     implementation 'com.caverock:androidsvg:1.4'
     //Gson convert
@@ -76,11 +78,9 @@ dependencies {
 
     //Android Networking for API calls
     implementation 'com.amitshekhar.android:android-networking:1.0.2'
-
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
-
     //slider
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
