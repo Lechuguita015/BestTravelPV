@@ -46,8 +46,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
         binding.tvName.text = hotelItem!!.name
         binding.tvDesc.text = hotelItem.description
         binding.tvPhone.text = hotelItem.phone
-        val rankingHotel = hotelItem.ranking!!.toInt()
-        binding.rank.rating = rankingHotel.toFloat()
+        val rankingHotel = hotelItem.ranking
+        binding.rank.rating = rankingHotel!!.toFloat()
         binding.cvPhone.setOnClickListener {
             val phone = hotelItem.phone
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
@@ -87,8 +87,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
         binding.tvName.text = restaurantItem!!.name
         binding.tvDesc.text = restaurantItem.description
         binding.tvPhone.text = restaurantItem.phone
-        val rankingRestaurant = restaurantItem.ranking!!.toInt()
-        binding.rank.rating = rankingRestaurant.toFloat()
+        val rankingRestaurant = restaurantItem.ranking
+        binding.rank.rating = rankingRestaurant!!.toFloat()
         binding.cvPhone.setOnClickListener {
             val phone = restaurantItem.phone
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
@@ -129,8 +129,8 @@ class PlaceDetailsActivity : AppCompatActivity() {
         binding.tvName.text = beachItem!!.name
         binding.tvDesc.text = beachItem.description
         binding.cvPhone.visibility = View.GONE
-        val rankingBeach = beachItem.ranking!!.toInt()
-        binding.rank.rating = rankingBeach.toFloat()
+        val rankingBeach = beachItem.ranking
+        binding.rank.rating = rankingBeach!!.toFloat()
 
         binding.moreInfo.setOnClickListener {
             binding.tvDesc.maxLines = Integer.MAX_VALUE

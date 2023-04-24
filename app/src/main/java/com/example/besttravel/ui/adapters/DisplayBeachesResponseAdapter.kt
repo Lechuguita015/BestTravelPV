@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.annotation.GlideModule
 import com.example.besttravel.databinding.ItemViewBinding
 import com.example.besttravel.models.beaches.BeachesResponse
 import com.example.besttravel.models.hotels.HotelsResponse
 import com.example.besttravel.databinding.ItemviewResponseBinding
 import com.example.besttravel.ui.interfaces.ItemClickListener
-
+@GlideModule
 class DisplayBeachesResponseAdapter(val context: Context,
                                     private val mArrayList: ArrayList<BeachesResponse>,
                                     private val mItemClickInterface: ItemClickListener
