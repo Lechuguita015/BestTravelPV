@@ -8,7 +8,7 @@
     <string name="tv_onboard_3">No matter where you are, you can save your favorite places and have them at hand for your next visit.</string>
     <string name="dont_have_account">Don\'t have an account? Join us</string>
     <string name="cancel">Cancel</string>
-    <string name="text_intro_join_us">Join us to start loocking for the best places</string>
+    <string name="text_intro_join_us">Register for more benefits</string>
     <string name="user_name">User name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -19,4 +19,5 @@
     <string name="message">the email and/or password are incorrect</string>
     <string name="accept">Retry</string>
     <string name="error404">Sorry there was an error creating your user, let\'s try one more time, if the problem persists we will fix it soon.</string>
+    <string name="cofirm_password">Confirm password</string>
 </resources>

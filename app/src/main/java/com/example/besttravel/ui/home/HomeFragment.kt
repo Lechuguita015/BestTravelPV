@@ -1,5 +1,6 @@
 package com.example.besttravel.ui.home
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -60,15 +61,9 @@ open class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
-       // val btnRestaurant = view.findViewById<CardView>(R.id.iv_restaurant)
-        //val btnBeaches = view.findViewById<CardView>(R.id.iv_beaches)
-        //val btnHotel = view.findViewById<CardView>(R.id.iv_hotel)
-        //val btnCars = view.findViewById<CardView>(R.id.iv_rents_cars)
-        //initialize all RecyclerView
-        //rvHotels = view.findViewById<RecyclerView>(R.id.rv_hotels)
-        //rvRestaurants = view.findViewById<RecyclerView>(R.id.rv_restaurant)
-        //rvBeaches = view.findViewById<RecyclerView>(R.id.rv_beaches)
-
+        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        val name = sharedPreferences.getString("name", "")
+        binding.tvUser.text = "Welcome $name"
 
         binding.ivRestaurant.setOnClickListener {
             val intent = Intent(activity, ServicesbtActivity::class.java)

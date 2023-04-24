@@ -1,5 +1,6 @@
 package com.example.besttravel.ui.startapp
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
@@ -36,7 +37,10 @@ open class RegisterFragment : Fragment(R.layout.fragment_register) {
         auth = Firebase.auth
 
         binding.btJoinUs.setOnClickListener {
-
+            val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            val editor = sharedPreferences.edit()
+            editor.putString("name", binding.etUsername.text.toString())
+            editor.apply()
             createAccount(binding.etEmailJoinus1.text.toString(),binding.etPasswordJoinus1.text.toString())
         }
 
@@ -55,7 +59,9 @@ open class RegisterFragment : Fragment(R.layout.fragment_register) {
         if (binding.etEmailJoinus1.text.toString().isEmpty() ||
             binding.etPasswordJoinus1.text.toString().isEmpty()){
             Toast.makeText(activity, "The email and/or password are empty", Toast.LENGTH_SHORT).show()
-        }else{
+        }else if(binding.etUsername.text.toString().isEmpty()){
+            Toast.makeText(activity, "Ingresa un nombre de usuario", Toast.LENGTH_SHORT).show()
+        }else if (binding.etPasswordJoinus1.text.toString().length >= 8 && binding.etPasswordJoinus1.text.toString() == binding.etPasswordConfirm1.text.toString()){
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener() { task ->
                     if (task.isSuccessful) {
@@ -70,10 +76,16 @@ open class RegisterFragment : Fragment(R.layout.fragment_register) {
                         }
                     }
                 }
+        }else{
+            if (binding.etPasswordJoinus1.text.toString().length < 8){
+                Toast.makeText(activity, "La contraseña debe tener al menos 8 caracteres", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(activity, "Las constraseñas no coinciden", Toast.LENGTH_SHORT).show()
+            }
         }
-
         // [END create_user_with_email]
     }
+
     private fun sendEmailVerification() {
         // [START send_email_verification]
         val user = auth.currentUser!!
