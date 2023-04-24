@@ -4,7 +4,11 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.besttravel.models.beaches.BeachesResponse
 import com.example.besttravel.models.hotels.HotelsResponse
@@ -33,31 +37,44 @@ class PlaceDetailsActivity : AppCompatActivity() {
                     displayBeach(beachItem)
                 }
 
-        binding.ivBack.setOnClickListener {
-            onBackPressed()
-        }
+//        binding.ivBack.setOnClickListener {
+//            onBackPressed()
+//        }
     }
     private fun displayHotel(hotelItem: HotelsResponse?) {
 
         binding.tvName.text = hotelItem!!.name
         binding.tvDesc.text = hotelItem.description
-        binding.btnPhone.setOnClickListener {
+        binding.tvPhone.text = hotelItem.phone
+        binding.cvPhone.setOnClickListener {
             val phone = hotelItem.phone
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
             startActivity(intent)
         }
-
-
-        binding.btnLocation.setOnClickListener {
+        binding.moreInfo.setOnClickListener {
+            binding.tvDesc.maxLines = Integer.MAX_VALUE
+            binding.moreInfo.visibility = View.GONE
+            binding.lessInfo.visibility = View.VISIBLE
+        }
+        binding.lessInfo.setOnClickListener {
+            binding.tvDesc.maxLines = 5
+            binding.moreInfo.visibility = View.VISIBLE
+            binding.lessInfo.visibility = View.GONE
+        }
+        binding.cvLocation.setOnClickListener {
             val url = hotelItem.address
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
         }
+        binding.ivReturn.setOnClickListener {
+            onBackPressed()
+        }
         val imageList = ArrayList<SlideModel>()
         for (i in 0 until hotelItem.images.size)
         {
-            imageList.add(SlideModel(hotelItem.images[i].urlImage))
+            val slideModel = SlideModel(hotelItem.images[i].urlImage, ScaleTypes.CENTER_CROP)
+            imageList.add(slideModel)
         }
 
         binding.imageSlider.setImageList(imageList)
@@ -67,22 +84,37 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
         binding.tvName.text = restaurantItem!!.name
         binding.tvDesc.text = restaurantItem.description
-        binding.btnPhone.setOnClickListener {
+        binding.tvPhone.text = restaurantItem.phone
+        binding.cvPhone.setOnClickListener {
             val phone = restaurantItem.phone
             val intent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", phone, null))
             startActivity(intent)
         }
 
-        binding.btnLocation.setOnClickListener {
+        binding.moreInfo.setOnClickListener {
+            binding.tvDesc.maxLines = Integer.MAX_VALUE
+            binding.moreInfo.visibility = View.GONE
+            binding.lessInfo.visibility = View.VISIBLE
+        }
+        binding.lessInfo.setOnClickListener {
+            binding.tvDesc.maxLines = 5
+            binding.moreInfo.visibility = View.VISIBLE
+            binding.lessInfo.visibility = View.GONE
+        }
+        binding.cvLocation.setOnClickListener {
             val url = restaurantItem.address
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
         }
+        binding.ivReturn.setOnClickListener {
+            onBackPressed()
+        }
         val imageList = ArrayList<SlideModel>()
         for (i in 0 until restaurantItem.images.size)
         {
-            imageList.add(SlideModel(restaurantItem.images[i].urlImage))
+            val slideModel = SlideModel(restaurantItem.images[i].urlImage, ScaleTypes.CENTER_CROP)
+            imageList.add(slideModel)
         }
 
         binding.imageSlider.setImageList(imageList)
@@ -92,18 +124,33 @@ class PlaceDetailsActivity : AppCompatActivity() {
 
         binding.tvName.text = beachItem!!.name
         binding.tvDesc.text = beachItem.description
-        binding.btnPhone.visibility = View.GONE
+        binding.cvPhone.visibility = View.GONE
 
-        binding.btnLocation.setOnClickListener {
+        binding.moreInfo.setOnClickListener {
+            binding.tvDesc.maxLines = Integer.MAX_VALUE
+            binding.moreInfo.visibility = View.GONE
+            binding.lessInfo.visibility = View.VISIBLE
+        }
+        binding.lessInfo.setOnClickListener {
+            binding.tvDesc.maxLines = 5
+            binding.moreInfo.visibility = View.VISIBLE
+            binding.lessInfo.visibility = View.GONE
+        }
+
+        binding.cvLocation.setOnClickListener {
             val url = beachItem.address
             val i = Intent(Intent.ACTION_VIEW)
             i.data = Uri.parse(url)
             startActivity(i)
         }
+        binding.ivReturn.setOnClickListener {
+            onBackPressed()
+        }
         val imageList = ArrayList<SlideModel>()
         for (i in 0 until beachItem.images.size)
         {
-            imageList.add(SlideModel(beachItem.images[i].urlImage))
+            val slideModel = SlideModel(beachItem.images[i].urlImage, ScaleTypes.CENTER_CROP)
+            imageList.add(slideModel)
         }
 
         binding.imageSlider.setImageList(imageList)

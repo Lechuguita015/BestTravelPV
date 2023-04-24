@@ -114,37 +114,7 @@ open class HomeFragment : Fragment() {
             showDataReciclerViewHotels()
 
         }, 3500)
-        binding.tvChargerHotels.setOnClickListener {
-            if (mHotelsList.isEmpty())
-            {
-                getBestHotels()
-            }
-            Handler(Looper.getMainLooper()).postDelayed({
-                showDataReciclerViewHotels()
 
-            }, 3500)
-        }
-        binding.tvChargerRestaurants.setOnClickListener {
-            Handler(Looper.getMainLooper()).postDelayed({
-                showDataReciclerViewRestaurants()
-
-            }, 3500)
-            if (mRestaurantsList.isEmpty())
-            {
-                getBestRestaurants()
-            }
-        }
-        binding.tvChargerBeaches.setOnClickListener {
-            binding.tvChargerRestaurants.isVisible = false
-            if (mBeachesList.isEmpty())
-            {
-                getBestBeaches()
-            }
-            Handler(Looper.getMainLooper()).postDelayed({
-                showDataReciclerViewBeaches()
-
-            }, 3500)
-        }
         return binding.root
     }
 
@@ -164,15 +134,11 @@ open class HomeFragment : Fragment() {
                     mHotelsList.addAll(hotels!!)
                     hotelsResponseAdapter.notifyDataSetChanged()
                 } else {
-                    binding.tvChargerHotels.isVisible = true
-                    binding.rvHotels.isVisible = false
                     Log.e("TAG", "onErrorHotels: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<List<HotelsResponse>>, t: Throwable) {
-                binding.tvChargerHotels.isVisible = true
-                binding.rvHotels.isVisible = false
                 Log.e("TAG", "onFailureHotels: ${t.message}")
             }
         })
@@ -194,15 +160,11 @@ open class HomeFragment : Fragment() {
                     mRestaurantsList.addAll(restaurants!!)
                     restaurantsResponseAdapter.notifyDataSetChanged()
                 } else {
-                    binding.tvChargerRestaurants.isVisible = true
-                    binding.rvRestaurant.isVisible = false
                     Log.e("TAG", "onErrorRestaurants: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<List<RestaurantsResponse>>, t: Throwable) {
-                binding.tvChargerRestaurants.isVisible = true
-                binding.rvRestaurant.isVisible = false
                 Log.e("TAG", "onFailureRestaurants: ${t.message}")
             }
         })
@@ -223,15 +185,11 @@ open class HomeFragment : Fragment() {
                     mBeachesList.addAll(beaches!!)
                     beachesResponseAdapter.notifyDataSetChanged()
                 } else {
-                    binding.rvBeaches.isVisible = false
-                    binding.tvChargerBeaches.isVisible = true
                     Log.e("TAG", "onErrorBeaches: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<List<BeachesResponse>>, t: Throwable) {
-                binding.rvBeaches.isVisible = false
-                binding.tvChargerBeaches.isVisible = true
                 Log.e("TAG", "onFailureBeaches: ${t.message}")
             }
         })
