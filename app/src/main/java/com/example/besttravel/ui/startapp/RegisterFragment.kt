@@ -16,12 +16,14 @@ import com.example.besttravel.databinding.FragmentRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 
 open class RegisterFragment : Fragment(R.layout.fragment_register) {
     private lateinit var auth: FirebaseAuth
     private lateinit var binding: FragmentRegisterBinding
+    private var bd = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,6 +70,11 @@ open class RegisterFragment : Fragment(R.layout.fragment_register) {
                         // Sign in success, update UI with the signed-in user's information
                         findNavController().navigate(R.id.action_registerFragment_to_successfulFragment)
                         sendEmailVerification()
+                         bd.collection("Users").document(email).set(
+                                hashMapOf("name user" to binding.etUsername.text.toString(),
+                                    "password" to binding.etPasswordJoinus1.text.toString(),
+                                    "rol" to "usuario")
+                        )
                     } else {
                         if (task.exception is FirebaseAuthUserCollisionException) {
                             Toast.makeText(activity, "Esta cuenta ya está registrada. Por favor, intenta de nuevo.", Toast.LENGTH_SHORT).show()

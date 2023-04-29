@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
+    id 'org.jetbrains.dokka'
 }
 android {
     namespace 'com.example.besttravel'
@@ -63,6 +64,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     //Email verification
     implementation 'com.sun.mail:javax.mail:1.6.2'
+    //Firebase cloud firestore
+    implementation 'com.google.firebase:firebase-firestore:24.5.0'
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -83,6 +86,7 @@ dependencies {
     //slider
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
 
+    dokkaPlugin("org.jetbrains.dokka:android-documentation-plugin:1.8.10")
 
 
 }
