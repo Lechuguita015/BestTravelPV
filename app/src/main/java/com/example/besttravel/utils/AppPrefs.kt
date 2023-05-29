@@ -13,15 +13,12 @@ import java.util.*
 
 object AppPrefs {
 
-
-    private fun getPrefs(context: Context): SharedPreferences
-    {
+    private fun getPrefs(context: Context): SharedPreferences {
         return context.getSharedPreferences(context.getString(R.string.app_name),MODE_PRIVATE)
     }
 
     // To save favorite data
-    fun saveList(context: Context,mArrayList: ArrayList<FavoriteModel>)
-    {
+    fun saveList(context: Context,mArrayList: ArrayList<FavoriteModel>){
         val gson = Gson()
         val json = gson.toJson(mArrayList)
         val editor = getPrefs(context).edit()
@@ -39,7 +36,7 @@ object AppPrefs {
             if (serializedObject != null) {
                 val gson = Gson()
                 val type: Type = object : TypeToken<List<FavoriteModel?>?>() {}.type
-                arrayItems = gson.fromJson<ArrayList<FavoriteModel>>(serializedObject, type)
+                arrayItems = gson.fromJson(serializedObject, type)
             }
         }
         return arrayItems

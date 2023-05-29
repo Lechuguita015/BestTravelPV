@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.besttravel.R
 import com.example.besttravel.ui.onboarding.Onboardings
@@ -16,6 +17,7 @@ import com.example.besttravel.ui.onboarding.Onboardings
 class SuccessfulFragment : Fragment(R.layout.fragment_successful) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         Handler().postDelayed({
             // Inicia la siguiente actividad después del temporizador
             val intent = Intent(requireContext(), Login::class.java)

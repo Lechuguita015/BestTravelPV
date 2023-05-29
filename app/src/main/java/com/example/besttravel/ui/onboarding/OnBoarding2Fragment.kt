@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
@@ -23,6 +24,7 @@ class OnBoarding2Fragment : Fragment(R.layout.fragment_on_boarding2) {
 
         val btnskip = view.findViewById<Button>(R.id.btn_skip)
         val btnNext = view.findViewById<Button>(R.id.btn_next)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         try {
             // obtén el archivo SVG desde la carpeta de recursos
             val inputStream: InputStream = resources.openRawResource(R.raw.onboard_2)

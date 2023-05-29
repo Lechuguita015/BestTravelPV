@@ -1,19 +1,20 @@
 package com.example.besttravel.ui
 
+
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isVisible
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.besttravel.R
 import com.example.besttravel.models.beaches.BeachesResponse
 import com.example.besttravel.models.hotels.HotelsResponse
 import com.example.besttravel.models.restaurants.RestaurantsResponse
 import com.example.besttravel.databinding.ActivityPlaceDetailsBinding
+import com.example.besttravel.models.beaches.Comments
+import com.example.besttravel.ui.adapters.CommentsAdapter
 
 
 class PlaceDetailsActivity : AppCompatActivity() {
@@ -22,14 +23,16 @@ class PlaceDetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPlaceDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
 
         if (intent.getBooleanExtra("isHotel", false)) {
             val hotelItem = intent.getSerializableExtra("HotelItem") as HotelsResponse
+//            val hotelComments = intent.getSerializableExtra("HotelComments") as Comments
             displayHotel(hotelItem)
         } else
             if (intent.getBooleanExtra("isRestaurant", false)) {
-                val restaurantItem = intent.getSerializableExtra("RestaurantItem") as RestaurantsResponse
+                val restaurantItem =
+                    intent.getSerializableExtra("RestaurantItem") as RestaurantsResponse
                 displayRestaurant(restaurantItem)
             } else
                 if (intent.getBooleanExtra("isBeach", false)) {
@@ -41,11 +44,18 @@ class PlaceDetailsActivity : AppCompatActivity() {
 //            onBackPressed()
 //        }
     }
+
     private fun displayHotel(hotelItem: HotelsResponse?) {
 
         binding.tvName.text = hotelItem!!.name
         binding.tvDesc.text = hotelItem.description
         binding.tvPhone.text = hotelItem.phone
+        // Obtiene la lista de comentarios del hotelItem
+        val commentsList = hotelItem.comments
+        // Crea el adaptador
+        val commentsAdapter = commentsList?.let { CommentsAdapter(this, it) }
+        // Configura el RecyclerView
+        binding.rvComments.adapter = commentsAdapter
         val rankingHotel = hotelItem.ranking
         binding.rank.rating = rankingHotel!!.toFloat()
         binding.cvPhone.setOnClickListener {
@@ -73,14 +83,25 @@ class PlaceDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
         val imageList = ArrayList<SlideModel>()
-        for (i in 0 until hotelItem.images.size)
-        {
-            val slideModel = SlideModel(hotelItem.images[i].urlImage, ScaleTypes.CENTER_CROP)
-            imageList.add(slideModel)
+        if (hotelItem.images.isNullOrEmpty()) {
+            // No hay imágenes disponibles, cargar varias imágenes por defecto
+            val defaultImages =
+                listOf(R.drawable.imagerror, R.drawable.imagerror, R.drawable.imagerror)
+            for (imageRes in defaultImages) {
+                val slideModel = SlideModel(imageRes, ScaleTypes.CENTER_CROP)
+                imageList.add(slideModel)
+            }
+        } else {
+            // Hay imágenes disponibles, cargar las imágenes del arreglo
+            for (i in 0 until hotelItem.images!!.size) {
+                val slideModel =
+                    SlideModel(hotelItem.images!![i].urlImage, ScaleTypes.CENTER_CROP)
+                imageList.add(slideModel)
+            }
+            binding.imageSlider.setImageList(imageList)
         }
-
-        binding.imageSlider.setImageList(imageList)
     }
+
 
     private fun displayRestaurant(restaurantItem: RestaurantsResponse?) {
 
@@ -115,13 +136,24 @@ class PlaceDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
         val imageList = ArrayList<SlideModel>()
-        for (i in 0 until restaurantItem.images.size)
-        {
-            val slideModel = SlideModel(restaurantItem.images[i].urlImage, ScaleTypes.CENTER_CROP)
-            imageList.add(slideModel)
-        }
+        if (restaurantItem.images.isNullOrEmpty()) {
+            // No hay imágenes disponibles, cargar varias imágenes por defecto
+            val defaultImages =
+                listOf(R.drawable.imagerror, R.drawable.imagerror, R.drawable.imagerror)
+            for (imageRes in defaultImages) {
+                val slideModel = SlideModel(imageRes, ScaleTypes.CENTER_CROP)
+                imageList.add(slideModel)
+            }
+        } else {
+            // Hay imágenes disponibles, cargar las imágenes del arreglo
+            for (i in 0 until restaurantItem.images!!.size) {
+                val slideModel =
+                    SlideModel(restaurantItem.images!![i].urlImage, ScaleTypes.CENTER_CROP)
+                imageList.add(slideModel)
+            }
 
-        binding.imageSlider.setImageList(imageList)
+            binding.imageSlider.setImageList(imageList)
+        }
     }
 
     private fun displayBeach(beachItem: BeachesResponse?) {
@@ -153,12 +185,24 @@ class PlaceDetailsActivity : AppCompatActivity() {
             onBackPressed()
         }
         val imageList = ArrayList<SlideModel>()
-        for (i in 0 until beachItem.images.size)
-        {
-            val slideModel = SlideModel(beachItem.images[i].urlImage, ScaleTypes.CENTER_CROP)
-            imageList.add(slideModel)
-        }
+        if (beachItem.images.isNullOrEmpty()) {
+            // No hay imágenes disponibles, cargar varias imágenes por defecto
+            val defaultImages =
+                intArrayOf(R.drawable.mapa, R.drawable.phone, R.drawable.logo)
+            for (imageRes in defaultImages) {
+                val slideModel = SlideModel(imageRes, ScaleTypes.CENTER_CROP)
+                imageList.add(slideModel)
+            }
+            binding.imageSlider.setImageList(imageList)
+        } else {
+            // Hay imágenes disponibles, cargar las imágenes del arreglo
+            for (i in 0 until beachItem.images!!.size) {
+                val slideModel =
+                    SlideModel(beachItem.images!![i].urlImage, ScaleTypes.CENTER_CROP)
+                imageList.add(slideModel)
+            }
 
-        binding.imageSlider.setImageList(imageList)
+            binding.imageSlider.setImageList(imageList)
+        }
     }
 }

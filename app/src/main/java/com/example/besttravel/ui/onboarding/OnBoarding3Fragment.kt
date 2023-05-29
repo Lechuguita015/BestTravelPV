@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.caverock.androidsvg.SVG
 import com.caverock.androidsvg.SVGParseException
 import com.example.besttravel.R
@@ -17,7 +18,7 @@ import java.io.InputStream
 class OnBoarding3Fragment : Fragment(R.layout.fragment_on_boarding3) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
 
         val btnStart = view.findViewById<Button>(R.id.btn_start)
         try {

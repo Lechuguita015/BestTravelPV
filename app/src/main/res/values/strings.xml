@@ -20,4 +20,6 @@
     <string name="accept">Retry</string>
     <string name="error404">Sorry there was an error creating your user, let\'s try one more time, if the problem persists we will fix it soon.</string>
     <string name="cofirm_password">Confirm password</string>
+    <string name="open">open</string>
+    <string name="close">close</string>
 </resources>

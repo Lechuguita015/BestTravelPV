@@ -1,6 +1,5 @@
 package com.example.besttravel.ui.home
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,11 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.besttravel.databinding.FragmentFavoriteBinding
 import com.example.besttravel.models.FavoriteModel
-import com.example.besttravel.ui.PlaceDetailsActivity
-import com.example.besttravel.ui.adapters.DisplayBeachesResponseAdapter
 import com.example.besttravel.ui.adapters.DisplayFavoriteAdapter
-import com.example.besttravel.ui.adapters.DisplayHotelsResponseAdapter
-import com.example.besttravel.ui.adapters.DisplayRestaurantsResponseAdapter
 import com.example.besttravel.ui.interfaces.ItemClickListener
 import com.example.besttravel.utils.AppPrefs
 import com.example.besttravel.utils.Constants

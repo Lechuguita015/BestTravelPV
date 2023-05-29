@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_details"
+    app:startDestination="@id/editUserFragment">
+
+    <fragment
+        android:id="@+id/editUserFragment"
+        android:name="com.example.besttravel.ui.EditUserFragment"
+        android:label="fragment_edit_user"
+        tools:layout="@layout/fragment_edit_user" />
+    <fragment
+        android:id="@+id/supportFragment"
+        android:name="com.example.besttravel.ui.SupportFragment"
+        android:label="fragment_support"
+        tools:layout="@layout/fragment_support" />
+</navigation>

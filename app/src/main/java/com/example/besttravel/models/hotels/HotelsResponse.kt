@@ -1,5 +1,6 @@
 package com.example.besttravel.models.hotels
 
+import com.example.besttravel.models.beaches.Comments
 import com.google.gson.annotations.SerializedName
 
 
@@ -11,8 +12,8 @@ data class HotelsResponse (
     @SerializedName("ranking"     ) var ranking     : Double?              = null,
     @SerializedName("address"     ) var address     : String?           = null,
     @SerializedName("phone"       ) var phone       : String?           = null,
-    @SerializedName("images"      ) var images      : ArrayList<Images> = arrayListOf(),
-    @SerializedName("comments"    ) var comments    : String?           = null,
+    @SerializedName("images"      ) var images      : ArrayList<Images>? = arrayListOf(),
+    @SerializedName("comments"    ) var comments    : ArrayList<Comments>?  = arrayListOf(),
     var isFavorite: Boolean = false
 
 ):java.io.Serializable

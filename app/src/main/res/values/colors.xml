@@ -13,9 +13,8 @@
     <color name="colorbtnOnboard">#F50057</color>
     <color name="successful">#01DF01</color>
     <color name="error">#FF0000</color>
-    <color name="shimmer">#C8C8C9</color>
-
-
+    <color name="shimmer">#E1E1E3</color>
+    <color name="underLine">#BDB8B8</color>
 
 
 </resources>

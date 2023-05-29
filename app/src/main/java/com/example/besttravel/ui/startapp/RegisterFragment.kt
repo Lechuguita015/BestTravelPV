@@ -1,15 +1,13 @@
 package com.example.besttravel.ui.startapp
 
-import android.content.Context
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.example.besttravel.R
 import com.example.besttravel.databinding.FragmentRegisterBinding
@@ -31,7 +29,7 @@ open class RegisterFragment : Fragment(R.layout.fragment_register) {
         savedInstanceState: Bundle?
     ): View? {
         binding =  FragmentRegisterBinding.inflate(inflater,container,false)
-
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,10 +37,6 @@ open class RegisterFragment : Fragment(R.layout.fragment_register) {
         auth = Firebase.auth
 
         binding.btJoinUs.setOnClickListener {
-            val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putString("name", binding.etUsername.text.toString())
-            editor.apply()
             createAccount(binding.etEmailJoinus1.text.toString(),binding.etPasswordJoinus1.text.toString())
         }
 
@@ -75,6 +69,10 @@ open class RegisterFragment : Fragment(R.layout.fragment_register) {
                                     "password" to binding.etPasswordJoinus1.text.toString(),
                                     "rol" to "usuario")
                         )
+
+
+
+
                     } else {
                         if (task.exception is FirebaseAuthUserCollisionException) {
                             Toast.makeText(activity, "Esta cuenta ya está registrada. Por favor, intenta de nuevo.", Toast.LENGTH_SHORT).show()

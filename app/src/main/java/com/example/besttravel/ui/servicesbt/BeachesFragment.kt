@@ -7,18 +7,17 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.ParsedRequestListener
 import com.example.besttravel.R
 import com.example.besttravel.models.beaches.BeachesResponse
 import com.example.besttravel.databinding.FragmentBeachesBinding
 import com.example.besttravel.ui.PlaceDetailsActivity
+import com.example.besttravel.ui.adapters.CommentsAdapter
 import com.example.besttravel.ui.adapters.DisplayBeachesResponseAdapter
 import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
@@ -45,6 +44,13 @@ class BeachesFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
         }, 3500)
+        setHasOptionsMenu(true)
+        // Cambiar el título del Action Bar
+        (activity as AppCompatActivity).supportActionBar?.title = "Beaches"
+        // Habilitar el botón de retroceso en el Action Bar
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // Establecer el icono del botón de retroceso
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow)
         return binding.root
     }
 
@@ -103,5 +109,13 @@ class BeachesFragment : Fragment() {
         binding.viewLoading.isVisible = false
         binding.rvBeaches.isVisible = true
     }
-
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

@@ -7,8 +7,10 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidnetworking.AndroidNetworking
@@ -19,6 +21,7 @@ import com.example.besttravel.models.restaurants.RestaurantsResponse
 import com.example.besttravel.databinding.FragmentRestaurantsBinding
 import com.example.besttravel.ui.PlaceDetailsActivity
 import com.example.besttravel.ui.adapters.DisplayRestaurantsResponseAdapter
+import com.example.besttravel.ui.home.MenuHome
 import com.example.besttravel.ui.interfaces.ApiService
 import com.example.besttravel.ui.interfaces.ItemClickListener
 import kotlinx.coroutines.CoroutineScope
@@ -37,7 +40,7 @@ class RestaurantsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentRestaurantsBinding.inflate(inflater, container, false)
         initRestaurantsAdapter()
@@ -45,6 +48,14 @@ class RestaurantsFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             showDataReciclerView()
         }, 3500)
+        setHasOptionsMenu(true)
+        // Cambiar el título del Action Bar
+        (activity as AppCompatActivity).supportActionBar?.title = "Restaurants"
+        // Habilitar el botón de retroceso en el Action Bar
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // Establecer el icono del botón de retroceso
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow)
+
         return binding.root
     }
 
@@ -96,5 +107,14 @@ class RestaurantsFragment : Fragment() {
     private fun showDataReciclerView() {
         binding.viewLoading.isVisible = false
         binding.rv.isVisible = true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

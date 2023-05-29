@@ -1,6 +1,5 @@
 package com.example.besttravel.ui.home
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -9,22 +8,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import androidx.cardview.widget.CardView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.androidnetworking.AndroidNetworking
-import com.androidnetworking.error.ANError
-import com.androidnetworking.interfaces.ParsedRequestListener
 import com.example.besttravel.R
 import com.example.besttravel.databinding.FragmentHomeBinding
 import com.example.besttravel.models.FavoriteModel
 import com.example.besttravel.models.beaches.BeachesResponse
+import com.example.besttravel.models.beaches.Comments
 import com.example.besttravel.models.hotels.HotelsResponse
 import com.example.besttravel.models.restaurants.RestaurantsResponse
 import com.example.besttravel.ui.PlaceDetailsActivity
+import com.example.besttravel.ui.adapters.CommentsAdapter
 import com.example.besttravel.ui.adapters.DisplayBeachesResponseAdapter
 import com.example.besttravel.ui.adapters.DisplayHotelsResponseAdapter
 import com.example.besttravel.ui.adapters.DisplayRestaurantsResponseAdapter
@@ -35,6 +31,7 @@ import com.example.besttravel.utils.AppPrefs
 import com.example.besttravel.utils.Constants
 import com.facebook.shimmer.Shimmer
 import com.facebook.shimmer.ShimmerDrawable
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -58,15 +55,14 @@ open class HomeFragment : Fragment() {
     lateinit var beachesResponseAdapter: DisplayBeachesResponseAdapter
     private lateinit var binding: FragmentHomeBinding
 
+    private var bd = FirebaseFirestore.getInstance()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater, container, false)
 
-        val sharedPreferences = requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val name = sharedPreferences.getString("name", "")
-        binding.tvUser.text = "Welcome $name"
 
         binding.ivRestaurant.setOnClickListener {
             val intent = Intent(activity, ServicesbtActivity::class.java)
@@ -192,6 +188,7 @@ open class HomeFragment : Fragment() {
                         Intent(requireContext(), PlaceDetailsActivity::class.java)
                             .putExtra("isHotel", true)
                             .putExtra("HotelItem", mHotelsList[position])
+                            .putExtra("HotelComments",true)
                     )
 
                 }
@@ -202,7 +199,7 @@ open class HomeFragment : Fragment() {
                     if (!Constants.mStringList.contains(address)) {
                         val model = FavoriteModel(
                             mHotelsList[position].name!!, mHotelsList[position].description!!,
-                            mHotelsList[position].images, mHotelsList[position].phone!!,
+                            mHotelsList[position].images!!, mHotelsList[position].phone!!,
                             address
                         )
                         Constants.mFavoriteList.add(model)
@@ -221,6 +218,8 @@ open class HomeFragment : Fragment() {
         binding.rvHotels.adapter = hotelsResponseAdapter
     }
 
+
+
     private fun initBeachesAdapter() {
         beachesResponseAdapter = DisplayBeachesResponseAdapter(
             requireContext(),
@@ -230,8 +229,7 @@ open class HomeFragment : Fragment() {
                     startActivity(
                         Intent(requireContext(), PlaceDetailsActivity::class.java)
                             .putExtra("isBeach", true)
-                            .putExtra("BeachItem", mBeachesList[position])
-                    )
+                            .putExtra("BeachItem", mBeachesList[position]))
                 }
 
                 override fun onFavClick(position: Int) {
@@ -239,7 +237,7 @@ open class HomeFragment : Fragment() {
                     if (!Constants.mStringList.contains(address)) {
                         val model = FavoriteModel(
                             mBeachesList[position].name!!, mBeachesList[position].description!!,
-                            mBeachesList[position].images, "",
+                            mBeachesList[position].images!!, "",
                             address
                         )
                         Constants.mFavoriteList.add(model)
@@ -277,7 +275,7 @@ open class HomeFragment : Fragment() {
                     if (!Constants.mStringList.contains(address)) {
                         val model = FavoriteModel(
                             mRestaurantsList[position].name!!, mRestaurantsList[position].description!!,
-                            mRestaurantsList[position].images, mRestaurantsList[position].phone!!,
+                            mRestaurantsList[position].images!!, mRestaurantsList[position].phone!!,
                             address
                         )
                         Constants.mFavoriteList.add(model)

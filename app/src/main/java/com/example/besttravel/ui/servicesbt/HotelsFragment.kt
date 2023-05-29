@@ -7,13 +7,16 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.ParsedRequestListener
+import com.example.besttravel.R
 import com.example.besttravel.models.hotels.HotelsResponse
 import com.example.besttravel.databinding.FragmentHotelsBinding
 import com.example.besttravel.ui.PlaceDetailsActivity
@@ -33,22 +36,31 @@ class HotelsFragment : Fragment() {
     private lateinit var binding: FragmentHotelsBinding
 
     private var mHotelsList: ArrayList<HotelsResponse> = ArrayList()
+    private var mHotelsComments: ArrayList<HotelsResponse> = ArrayList()
     //lateinit var hotelsResponseAdapter: DisplayHotelsResponseAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentHotelsBinding.inflate(inflater,container,false)
         initHotelAdapter()
         getBestHotels()
         Handler(Looper.getMainLooper()).postDelayed({
-            showDataReciclerView()
+            showDataRecyclerView()
         }, 3500)
+        setHasOptionsMenu(true)
+        // Cambiar el título del Action Bar
+        (activity as AppCompatActivity).supportActionBar?.title = "Hotels"
+        // Habilitar el botón de retroceso en el Action Bar
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // Establecer el icono del botón de retroceso
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow)
         return binding.root
     }
 
+    //Consumo de API para obtener los hoteles
     private fun getBestHotels() {
         CoroutineScope(Dispatchers.IO).launch {
             val retrofit = Retrofit.Builder()
@@ -95,9 +107,18 @@ class HotelsFragment : Fragment() {
         binding.rv.layoutManager = LinearLayoutManager(requireContext())
         binding.rv.adapter = adapter
     }
-    private fun showDataReciclerView() {
+    private fun showDataRecyclerView() {
         binding.viewLoading.isVisible = false
         binding.rv.isVisible = true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                requireActivity().onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }
